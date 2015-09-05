@@ -1,3 +1,2 @@
-# Remote API v1.20 LYNDA!!
+# Remote API v1.20 
 
-HELLOOOO
