@@ -37,6 +37,18 @@ html, body {
   -webkit-text-size-adjust: none; /* Never autoresize text */
 }
 
+#main-header {
+  height: 94px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1024;
+  background: #ffffff;
+  box-shadow: 0 1px 3px #000;
+  text-align: center;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // TABLE OF CONTENTS
 ////////////////////////////////////////////////////////////////////////////////
@@ -64,7 +76,7 @@ html, body {
   overflow-x: hidden;
   position: fixed;
   z-index: 30;
-  top: 0;
+  top: 94px;
   left: 0;
   bottom: 0;
   width: $nav-width;
@@ -234,7 +246,7 @@ html, body {
   padding: 0 1.5em 5em 0; // increase touch size area
   display: none;
   position: fixed;
-  top: 0;
+  top: 94px;
   left: 0;
   z-index: 100;
   color: #000;
@@ -261,6 +273,7 @@ html, body {
 .page-wrapper {
   margin-left: $nav-width;
   position: relative;
+  top: 94px;
   z-index: 10;
   background-color: $main-bg;
   min-height: 100%;
