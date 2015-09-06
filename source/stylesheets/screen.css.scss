@@ -350,13 +350,12 @@ html, body {
 // CONTENT STYLES
 ////////////////////////////////////////////////////////////////////////////////
 // This is all the stuff with the light background in the left half of the page
-
 .content {
+
     // to place content above the dark box
     position: relative;
-
-    min-height: 100%;
     z-index: 30;
+    padding-bottom: 80px;
 
     &:after {
         content: '';
