@@ -55,68 +55,92 @@ or <code class="prettyprint">pull</code>, the HTTP connection is hijacked to tra
 
 <h2 id="list-containers">List Containers</h2>
 
-<p>Use: <code class="prettyprint">GET /containers/json</code> </p>
+<h3 id="usage">Usage</h3>
 
-<p>Example: <code class="prettyprint">GET /containers/json?all=1&amp;before=8dfafdbc3a40&amp;size=1 HTTP/1.1</code></p>
+<p><code class="prettyprint">GET /containers/json</code> </p>
+
+<h3 id="example">Example</h3>
+
+<p><code class="prettyprint">GET /containers/json?all=1&amp;before=8dfafdbc3a40&amp;size=1 HTTP/1.1</code></p>
 <pre class="highlight json"><code><span class="p">[</span><span class="w">
-     </span><span class="p">{</span><span class="w">
-             </span><span class="nt">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8dfafdbc3a40"</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"Names"</span><span class="p">:[</span><span class="s2">"/boring_feynman"</span><span class="p">],</span><span class="w">
-             </span><span class="nt">"Image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ubuntu:latest"</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"Command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"echo 1"</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"Created"</span><span class="p">:</span><span class="w"> </span><span class="mi">1367854155</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"Status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Exit 0"</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"Ports"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-              </span><span class="p">{</span><span class="w">
-                </span><span class="nt">"PrivatePort"</span><span class="p">:</span><span class="w"> </span><span class="mi">2222</span><span class="p">,</span><span class="w"> 
-                </span><span class="nt">"PublicPort"</span><span class="p">:</span><span class="w"> </span><span class="mi">3333</span><span class="p">,</span><span class="w"> 
-                </span><span class="nt">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tcp"</span><span class="w">
-              </span><span class="p">}</span><span class="w">
-             </span><span class="p">],</span><span class="w">
-             </span><span class="nt">"Labels"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                     </span><span class="nt">"com.example.vendor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Acme"</span><span class="p">,</span><span class="w">
-                     </span><span class="nt">"com.example.license"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GPL"</span><span class="p">,</span><span class="w">
-                     </span><span class="nt">"com.example.version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0"</span><span class="w">
-             </span><span class="p">},</span><span class="w">
-             </span><span class="nt">"SizeRw"</span><span class="p">:</span><span class="w"> </span><span class="mi">12288</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"SizeRootFs"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
-     </span><span class="p">},</span><span class="w">
-     </span><span class="p">{</span><span class="w">
-             </span><span class="nt">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9cd87474be90"</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"Names"</span><span class="p">:[</span><span class="s2">"/coolName"</span><span class="p">],</span><span class="w">
-             </span><span class="nt">"Image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ubuntu:latest"</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"Command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"echo 222222"</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"Created"</span><span class="p">:</span><span class="w"> </span><span class="mi">1367854155</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"Status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Exit 0"</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"Ports"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-             </span><span class="nt">"Labels"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
-             </span><span class="nt">"SizeRw"</span><span class="p">:</span><span class="w"> </span><span class="mi">12288</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"SizeRootFs"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
-     </span><span class="p">},</span><span class="w">
-     </span><span class="p">{</span><span class="w">
-             </span><span class="nt">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3176a2479c92"</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"Names"</span><span class="p">:[</span><span class="s2">"/sleepy_dog"</span><span class="p">],</span><span class="w">
-             </span><span class="nt">"Image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ubuntu:latest"</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"Command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"echo 3333333333333333"</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"Created"</span><span class="p">:</span><span class="w"> </span><span class="mi">1367854154</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"Status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Exit 0"</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"Ports"</span><span class="p">:[],</span><span class="w">
-             </span><span class="nt">"Labels"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
-             </span><span class="nt">"SizeRw"</span><span class="p">:</span><span class="mi">12288</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"SizeRootFs"</span><span class="p">:</span><span class="mi">0</span><span class="w">
-     </span><span class="p">},</span><span class="w">
-     </span><span class="p">{</span><span class="w">
-             </span><span class="nt">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4cb07b47f9fb"</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"Names"</span><span class="p">:[</span><span class="s2">"/running_cat"</span><span class="p">],</span><span class="w">
-             </span><span class="nt">"Image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ubuntu:latest"</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"Command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"echo 444444444444444444444444444444444"</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"Created"</span><span class="p">:</span><span class="w"> </span><span class="mi">1367854152</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"Status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Exit 0"</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"Ports"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-             </span><span class="nt">"Labels"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
-             </span><span class="nt">"SizeRw"</span><span class="p">:</span><span class="w"> </span><span class="mi">12288</span><span class="p">,</span><span class="w">
-             </span><span class="nt">"SizeRootFs"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
-     </span><span class="p">}</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"Id"</span><span class="p">:</span><span class="s2">"8dfafdbc3a40"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Names"</span><span class="p">:[</span><span class="w">
+      </span><span class="s2">"/boring_feynman"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"Image"</span><span class="p">:</span><span class="s2">"ubuntu:latest"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Command"</span><span class="p">:</span><span class="s2">"echo 1"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Created"</span><span class="p">:</span><span class="mi">1367854155</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Status"</span><span class="p">:</span><span class="s2">"Exit 0"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Ports"</span><span class="p">:[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"PrivatePort"</span><span class="p">:</span><span class="mi">2222</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"PublicPort"</span><span class="p">:</span><span class="mi">3333</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"Type"</span><span class="p">:</span><span class="s2">"tcp"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"Labels"</span><span class="p">:{</span><span class="w">
+      </span><span class="nt">"com.example.vendor"</span><span class="p">:</span><span class="s2">"Acme"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"com.example.license"</span><span class="p">:</span><span class="s2">"GPL"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"com.example.version"</span><span class="p">:</span><span class="s2">"1.0"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"SizeRw"</span><span class="p">:</span><span class="mi">12288</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"SizeRootFs"</span><span class="p">:</span><span class="mi">0</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"Id"</span><span class="p">:</span><span class="s2">"9cd87474be90"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Names"</span><span class="p">:[</span><span class="w">
+      </span><span class="s2">"/coolName"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"Image"</span><span class="p">:</span><span class="s2">"ubuntu:latest"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Command"</span><span class="p">:</span><span class="s2">"echo 222222"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Created"</span><span class="p">:</span><span class="mi">1367854155</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Status"</span><span class="p">:</span><span class="s2">"Exit 0"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Ports"</span><span class="p">:[</span><span class="w">
+
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"Labels"</span><span class="p">:{</span><span class="w">
+
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"SizeRw"</span><span class="p">:</span><span class="mi">12288</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"SizeRootFs"</span><span class="p">:</span><span class="mi">0</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"Id"</span><span class="p">:</span><span class="s2">"3176a2479c92"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Names"</span><span class="p">:[</span><span class="w">
+      </span><span class="s2">"/sleepy_dog"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"Image"</span><span class="p">:</span><span class="s2">"ubuntu:latest"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Command"</span><span class="p">:</span><span class="s2">"echo 3333333333333333"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Created"</span><span class="p">:</span><span class="mi">1367854154</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Status"</span><span class="p">:</span><span class="s2">"Exit 0"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Ports"</span><span class="p">:[</span><span class="w">
+
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"Labels"</span><span class="p">:{</span><span class="w">
+
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"SizeRw"</span><span class="p">:</span><span class="mi">12288</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"SizeRootFs"</span><span class="p">:</span><span class="mi">0</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"Id"</span><span class="p">:</span><span class="s2">"4cb07b47f9fb"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Names"</span><span class="p">:[</span><span class="w">
+      </span><span class="s2">"/running_cat"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"Image"</span><span class="p">:</span><span class="s2">"ubuntu:latest"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Command"</span><span class="p">:</span><span class="s2">"echo 444444444444444444444444444444444"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Created"</span><span class="p">:</span><span class="mi">1367854152</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Status"</span><span class="p">:</span><span class="s2">"Exit 0"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Ports"</span><span class="p">:[</span><span class="w">
+
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"Labels"</span><span class="p">:{</span><span class="w">
+
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"SizeRw"</span><span class="p">:</span><span class="mi">12288</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"SizeRootFs"</span><span class="p">:</span><span class="mi">0</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 
