@@ -40,19 +40,6 @@
                 
                     <h1 id="api-reference">API Reference</h1>
 
-<h2 id="changelog">Changelog</h2>
-
-<ul>
-<li>The Remote API has replaced <code class="prettyprint">rcli</code>.</li>
-<li>The daemon listens on <code class="prettyprint">unix:///var/run/docker.sock</code> but you can
-<a href="/articles/basics/#bind-docker-to-another-hostport-or-a-unix-socket">Bind Docker to another host/port or a Unix socket</a>.</li>
-<li>The API tends to be REST. However, for some complex commands, like <code class="prettyprint">attach</code>
-or <code class="prettyprint">pull</code>, the HTTP connection is hijacked to transport <code class="prettyprint">stdout</code>,
-<code class="prettyprint">stdin</code> and <code class="prettyprint">stderr</code>.</li>
-<li>When the client API version is newer than the daemon&rsquo;s, these calls return an HTTP
-<code class="prettyprint">400 Bad Request</code> error message.</li>
-</ul>
-
 <h2 id="list-containers">List Containers</h2>
 
 <h3 id="usage">Usage</h3>
@@ -182,7 +169,7 @@ or <code class="prettyprint">pull</code>, the HTTP connection is hijacked to tra
 </tr>
 </tbody></table>
 
-<h3 id="status-codes">Status codes</h3>
+<h3 id="errors">Errors</h3>
 
 <table><thead>
 <tr>
@@ -190,10 +177,6 @@ or <code class="prettyprint">pull</code>, the HTTP connection is hijacked to tra
 <th>Description</th>
 </tr>
 </thead><tbody>
-<tr>
-<td><strong>200</strong></td>
-<td>no error</td>
-</tr>
 <tr>
 <td><strong>400</strong></td>
 <td>bad parameter</td>
