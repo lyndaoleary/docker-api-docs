@@ -410,7 +410,7 @@ html, body {
     h3, h4, h5, h6 {
         @extend %header-font;
         font-size: 15px;
-        margin-top: 2.5em;
+        margin-top: 1em;
         margin-bottom: 0.8em;
     }
 
@@ -425,35 +425,35 @@ html, body {
     }
 
     table {
-        margin-bottom: 1em;
-        overflow: auto;
-        th,td {
-            text-align: left;
-            vertical-align: top;
-            line-height: 1.6;
-        }
+      margin-bottom: 1em;
+      overflow: auto;
+      th,td {
+        text-align: left;
+        vertical-align: top;
+        line-height: 1.7;
+      }
 
-        th {
-            padding: 5px 10px;
-            border-bottom: 1px solid #ccc;
-            vertical-align: bottom;
-        }
+      th {
+        padding: 5px 10px;
+        border-bottom: 1px solid #ccc;
+        vertical-align: bottom;
+      }
 
-        td {
-            padding: 10px;
-        }
+      td {
+        padding: 10px;
+      }
 
-        tr:last-child {
-            border-bottom: 1px solid #ccc;
-        }
+      tr:last-child {
+        border-bottom: 1px solid #ccc;
+      }
 
-        tr:nth-child(odd)>td {
-            background-color: lighten($main-bg,4.2%);
-        }
+      tr:nth-child(odd)>td {
+        background-color: lighten($nav-bg, 7.0%);
+      }
 
-        tr:nth-child(even)>td {
-            background-color: lighten($main-bg,2.4%);
-        }
+      tr:nth-child(even)>td {
+        background-color: lighten($nav-bg, 4.8%);
+      }
     }
 
     dt {
