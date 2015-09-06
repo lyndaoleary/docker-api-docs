@@ -41,14 +41,6 @@
                     <h1 id="api-reference">API Reference</h1>
 
 <h2 id="list-containers">List Containers</h2>
-
-<h3 id="usage">Usage</h3>
-
-<p><code class="prettyprint">GET /containers/json</code> </p>
-
-<h3 id="example">Example</h3>
-
-<p><code class="prettyprint">GET /containers/json?all=1&amp;before=8dfafdbc3a40&amp;size=1 HTTP/1.1</code></p>
 <pre class="highlight json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="nt">"Id"</span><span class="p">:</span><span class="s2">"8dfafdbc3a40"</span><span class="p">,</span><span class="w">
@@ -92,46 +84,16 @@
     </span><span class="nt">"SizeRw"</span><span class="p">:</span><span class="mi">12288</span><span class="p">,</span><span class="w">
     </span><span class="nt">"SizeRootFs"</span><span class="p">:</span><span class="mi">0</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"Id"</span><span class="p">:</span><span class="s2">"3176a2479c92"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"Names"</span><span class="p">:[</span><span class="w">
-      </span><span class="s2">"/sleepy_dog"</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="nt">"Image"</span><span class="p">:</span><span class="s2">"ubuntu:latest"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"Command"</span><span class="p">:</span><span class="s2">"echo 3333333333333333"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"Created"</span><span class="p">:</span><span class="mi">1367854154</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"Status"</span><span class="p">:</span><span class="s2">"Exit 0"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"Ports"</span><span class="p">:[</span><span class="w">
-
-    </span><span class="p">],</span><span class="w">
-    </span><span class="nt">"Labels"</span><span class="p">:{</span><span class="w">
-
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"SizeRw"</span><span class="p">:</span><span class="mi">12288</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"SizeRootFs"</span><span class="p">:</span><span class="mi">0</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"Id"</span><span class="p">:</span><span class="s2">"4cb07b47f9fb"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"Names"</span><span class="p">:[</span><span class="w">
-      </span><span class="s2">"/running_cat"</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="nt">"Image"</span><span class="p">:</span><span class="s2">"ubuntu:latest"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"Command"</span><span class="p">:</span><span class="s2">"echo 444444444444444444444444444444444"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"Created"</span><span class="p">:</span><span class="mi">1367854152</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"Status"</span><span class="p">:</span><span class="s2">"Exit 0"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"Ports"</span><span class="p">:[</span><span class="w">
-
-    </span><span class="p">],</span><span class="w">
-    </span><span class="nt">"Labels"</span><span class="p">:{</span><span class="w">
-
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"SizeRw"</span><span class="p">:</span><span class="mi">12288</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"SizeRootFs"</span><span class="p">:</span><span class="mi">0</span><span class="w">
-  </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 
-<h3 id="query-parameters">Query Parameters</h3>
+<h3 id="usage">Usage</h3>
+
+<p><code class="prettyprint">GET /containers/json</code> </p>
+
+<h3 id="example">Example</h3>
+
+<p><code class="prettyprint">GET /containers/json?all=1&amp;before=8dfafdbc3a40&amp;size=1 HTTP/1.1</code></p>
 
 <table><thead>
 <tr>
@@ -153,11 +115,11 @@
 </tr>
 <tr>
 <td><strong>since</strong></td>
-<td>how only containers created since Id, include non-running ones.</td>
+<td>Show only containers created since Id, include non-running ones.</td>
 </tr>
 <tr>
 <td><strong>before</strong></td>
-<td>Show only containers created before Id, includenon-running ones.</td>
+<td>Show only containers created before Id, include non-running ones.</td>
 </tr>
 <tr>
 <td><strong>size</strong></td>
@@ -165,11 +127,9 @@
 </tr>
 <tr>
 <td><strong>filters</strong></td>
-<td>a JSON encoded value of the filters (a <code class="prettyprint">map[string][]string</code>) to process on the containers list. Available filters:<code class="prettyprint">exited=&lt;int&gt;</code>; &ndash; containers with exit code of  <code class="prettyprint">&lt;int&gt;</code> ;<code class="prettyprint">status=</code>(<code class="prettyprint">created</code></td>
+<td>a JSON encoded value of the filters (a <code class="prettyprint">map[string][]string</code>) to process on the containers list. Available filters:<code class="prettyprint">exited=&lt;int&gt;</code>; &ndash; containers with exit code of  <code class="prettyprint">&lt;int&gt;</code> ;<code class="prettyprint">status=</code>(<code class="prettyprint">created</code>, <code class="prettyprint">restarting</code>, <code class="prettyprint">running</code>, <code class="prettyprint">paused</code>, <code class="prettyprint">exited</code>)<code class="prettyprint">label=key</code> or <code class="prettyprint">label=&quot;key=value&quot;</code> of a container label</td>
 </tr>
 </tbody></table>
-
-<h3 id="errors">Errors</h3>
 
 <table><thead>
 <tr>
