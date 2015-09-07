@@ -1,27 +1,20 @@
-# Installation
+# Installation on Debian
 
-## Debian
-Debian 8 comes with a 3.16.0 Linux kernel, the `docker.io` package can be found in the `jessie-backports` repository. Reasoning behind this can be found [here](https://lists.debian.org/debian-release/2015/03/msg00685.html). Instructions how to enable the backports repository can be found [here](http://backports.debian.org/Instructions/).
+Debian 8 comes with a 3.16.0 Linux kernel, the `docker.io` package can be found in the `jessie-backports` repository. View reasoning behind this [here](https://lists.debian.org/debian-release/2015/03/msg00685.html). View instructions on how to enable the backports repository [here](http://backports.debian.org/Instructions/).
 
 <aside class="warning">
 Debian contains a much older KDE3/GNOME2 package called ``docker``, so the package and the executable are called ``docker.io``.
 </aside>
 
-### Installation Steps
+###Installation
 
-Make sure you enabled the `jessie-backports` repository, as stated above.
+* Make sure you enabled the `jessie-backports` repository, as stated above.
 
-Ensure apt sources are up-to-date:
+* Ensure apt sources are up-to-date: `$ sudo apt-get update`
 
-    `$ sudo apt-get update`
+* Install the `docker.io` package: `$ sudo apt-get install docker.io`
 
-Install the `docker.io` package:
-
-    `$ sudo apt-get install docker.io`
-
-To verify that everything has worked as expected:
-
-    `$ sudo docker run --rm hello-world`
+* Verify that everything has worked as expected: `$ sudo docker run --rm hello-world`
 
 This command downloads and runs the `hello-world` image in a container. When the
 container runs, it prints an informational message. Then, it exits.

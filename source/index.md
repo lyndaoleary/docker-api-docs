@@ -7,7 +7,9 @@ language_tabs:
 
 includes:
   - install
+  - cli
   - apiv121
+  
 
 
 search: true

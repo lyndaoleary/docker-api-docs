@@ -84,7 +84,7 @@ $ curl --unix-socket /var/run/docker.sock http:/containers/json?all=1&before=8df
 **400**        | bad parameter
 **500**        | server error
 
-## Create a container
+## Create Comtainers
 
 >Example request
 
@@ -207,7 +207,7 @@ Content-Type: application/json
 ### Usage
 `POST /containers/create`
 
-### Request Body Parameters:
+### Request Body Parameters
 
 |                 |              |
 |-----------------|--------------| 
