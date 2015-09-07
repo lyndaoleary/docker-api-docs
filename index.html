@@ -11,6 +11,11 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
             <script src="javascripts/all.js" type="text/javascript"></script>
 
+            <script>
+$(function() {
+    setupLanguages(["http","shell"]);
+});
+            </script>
     </head>
 
     <body class="index">
@@ -27,6 +32,10 @@
             </span>
         </a>
         <div class="tocify-wrapper">
+                <div class="lang-selector">
+                            <a href="#" data-language-name="http">http</a>
+                            <a href="#" data-language-name="shell">curl</a>
+                </div>
                 <div class="search">
                     <input type="text" class="search" id="input-search" placeholder="Search">
                 </div>
@@ -38,9 +47,216 @@
             <div class="dark-box"></div>
             <div class="content">
                 
+                    <h1 id="installation-on-debian">Installation on Debian</h1>
+
+<p>Debian 8 comes with a 3.16.0 Linux kernel, the <code class="prettyprint">docker.io</code> package can be found in the <code class="prettyprint">jessie-backports</code> repository. View reasoning behind this <a href="https://lists.debian.org/debian-release/2015/03/msg00685.html">here</a>. View instructions on how to enable the backports repository <a href="http://backports.debian.org/Instructions/">here</a>.</p>
+
+<aside class="warning">
+Debian contains a much older KDE3/GNOME2 package called &ldquo;docker&rdquo;, so the package and the executable are called &ldquo;docker.io&rdquo;.
+</aside>
+
+<h3 id="installation">Installation</h3>
+
+<ul>
+<li><p>Make sure you enabled the <code class="prettyprint">jessie-backports</code> repository, as stated above.</p></li>
+<li><p>Ensure apt sources are up-to-date: <code class="prettyprint">$ sudo apt-get update</code></p></li>
+<li><p>Install the <code class="prettyprint">docker.io</code> package: <code class="prettyprint">$ sudo apt-get install docker.io</code></p></li>
+<li><p>Verify that everything has worked as expected: <code class="prettyprint">$ sudo docker run --rm hello-world</code></p></li>
+</ul>
+
+<p>This command downloads and runs the <code class="prettyprint">hello-world</code> image in a container. When the
+container runs, it prints an informational message. Then, it exits.</p>
+
+<p>If you need to add an HTTP Proxy, set a different directory or partition for the
+Docker runtime files, or make other customizations, read our Systemd article to
+learn how to <a href="/articles/systemd/">customize your Systemd Docker daemon options</a>.</p>
+
+<aside class="notice">
+If you want to enable memory and swap accounting see <a href="/installation/ubuntulinux/#adjust-memory-and-swap-accounting">this</a>.
+</aside>
+
+                    <h1 id="command-line-reference">Command Line Reference</h1>
+
+<p>To list available commands, either run <code class="prettyprint">docker</code> with no parameters
+or execute <code class="prettyprint">docker help</code>:</p>
+
+<p>$ docker
+      Usage: docker [OPTIONS] COMMAND [arg&hellip;]
+             docker daemon [ &ndash;help | &hellip; ]
+             docker [ &ndash;help | -v | &ndash;version ]</p>
+
+<p>-H, &ndash;host=[]: The socket(s) to bind to in daemon mode, specified using one or more tcp://host:port, unix:///path/to/socket, fd://* or fd://socketfd.</p>
+
+<p>A self-sufficient runtime for Linux containers.</p>
+
+<p>&hellip;</p>
+
+<p>Depending on your Docker system configuration, you may be required to preface
+each <code class="prettyprint">docker</code> command with <code class="prettyprint">sudo</code>. To avoid having to use <code class="prettyprint">sudo</code> with the
+<code class="prettyprint">docker</code> command, your system administrator can create a Unix group called
+<code class="prettyprint">docker</code> and add users to it.</p>
+
+<p>For more information about installing Docker or <code class="prettyprint">sudo</code> configuration, refer to
+the <a href="/installation">installation</a> instructions for your operating system.</p>
+
+<h2 id="environment-variables">Environment variables</h2>
+
+<p>For easy reference, the following list of environment variables are supported
+by the <code class="prettyprint">docker</code> command line:</p>
+
+<ul>
+<li><code class="prettyprint">DOCKER_CONFIG</code> The location of your client configuration files.</li>
+<li><code class="prettyprint">DOCKER_CERT_PATH</code> The location of your authentication keys.</li>
+<li><code class="prettyprint">DOCKER_DRIVER</code> The graph driver to use.</li>
+<li><code class="prettyprint">DOCKER_HOST</code> Daemon socket to connect to.</li>
+<li><code class="prettyprint">DOCKER_NOWARN_KERNEL_VERSION</code> Prevent warnings that your Linux kernel is
+unsuitable for Docker.</li>
+<li><code class="prettyprint">DOCKER_RAMDISK</code> If set this will disable &lsquo;pivot_root&rsquo;.</li>
+<li><code class="prettyprint">DOCKER_TLS_VERIFY</code> When set Docker uses TLS and verifies the remote.</li>
+<li><code class="prettyprint">DOCKER_CONTENT_TRUST</code> When set Docker uses notary to sign and verify images.
+Equates to <code class="prettyprint">--disable-content-trust=false</code> for build, create, pull, push, run.</li>
+<li><code class="prettyprint">DOCKER_TMPDIR</code> Location for temporary Docker files.</li>
+</ul>
+
+<p>Because Docker is developed using &#39;Go&rsquo;, you can also use any environment
+variables used by the &#39;Go&rsquo; runtime. In particular, you may find these useful:</p>
+
+<ul>
+<li><code class="prettyprint">HTTP_PROXY</code></li>
+<li><code class="prettyprint">HTTPS_PROXY</code></li>
+<li><code class="prettyprint">NO_PROXY</code></li>
+</ul>
+
+<p>These Go environment variables are case-insensitive. See the
+<a href="http://golang.org/pkg/net/http/">Go specification</a> for details on these
+variables.</p>
+
+<h2 id="configuration-files">Configuration files</h2>
+
+<p>By default, the Docker command line stores its configuration files in a
+directory called <code class="prettyprint">.docker</code> within your <code class="prettyprint">HOME</code> directory. However, you can
+specify a different location via the <code class="prettyprint">DOCKER_CONFIG</code> environment variable
+or the <code class="prettyprint">--config</code> command line option. If both are specified, then the
+<code class="prettyprint">--config</code> option overrides the <code class="prettyprint">DOCKER_CONFIG</code> environment variable.
+For example:</p>
+
+<p>docker &ndash;config ~/testconfigs/ ps</p>
+
+<p>Instructs Docker to use the configuration files in your <code class="prettyprint">~/testconfigs/</code>
+directory when running the <code class="prettyprint">ps</code> command.</p>
+
+<p>Docker manages most of the files in the configuration directory
+and you should not modify them. However, you <em>can modify</em> the
+<code class="prettyprint">config.json</code> file to control certain aspects of how the <code class="prettyprint">docker</code>
+command behaves.</p>
+
+<p>Currently, you can modify the <code class="prettyprint">docker</code> command behavior using environment
+variables or command-line options. You can also use options within
+<code class="prettyprint">config.json</code> to modify some of the same behavior. When using these
+mechanisms, you must keep in mind the order of precedence among them. Command
+line options override environment variables and environment variables override
+properties you specify in a <code class="prettyprint">config.json</code> file.</p>
+
+<p>The <code class="prettyprint">config.json</code> file stores a JSON encoding of several properties:</p>
+
+<p>The property <code class="prettyprint">HttpHeaders</code> specifies a set of headers to include in all messages
+sent from the Docker client to the daemon. Docker does not try to interpret or
+understand these header; it simply puts them into the messages. Docker does
+not allow these headers to change any headers it sets for itself.</p>
+
+<p>The property <code class="prettyprint">psFormat</code> specifies the default format for <code class="prettyprint">docker ps</code> output.
+When the <code class="prettyprint">--format</code> flag is not provided with the <code class="prettyprint">docker ps</code> command,
+Docker&rsquo;s client uses this property. If this property is not set, the client
+falls back to the default table format. For a list of supported formatting
+directives, see the <a href="../ps"><strong>Formatting</strong> section in the <code class="prettyprint">docker ps</code> documentation</a></p>
+
+<p>Following is a sample <code class="prettyprint">config.json</code> file:</p>
+
+<p>{
+      &ldquo;HttpHeaders&rdquo;: {
+        &ldquo;MyHeader&rdquo;: &ldquo;MyValue&rdquo;
+      },
+      &ldquo;psFormat&rdquo;: &ldquo;table {{.ID}}\t{{.Image}}\t{{.Command}}\t{{.Labels}}&rdquo;
+    }</p>
+
+<h2 id="help">Help</h2>
+
+<p>To list the help on any command just execute the command, followed by the
+<code class="prettyprint">--help</code> option.</p>
+
+<p>$ docker run &ndash;help</p>
+
+<p>Usage: docker run [OPTIONS] IMAGE [COMMAND] [ARG&hellip;]</p>
+
+<p>Run a command in a new container</p>
+
+<p>-a, &ndash;attach=[]            Attach to STDIN, STDOUT or STDERR
+      -c, &ndash;cpu-shares=0         CPU shares (relative weight)
+    &hellip;</p>
+
+<h2 id="option-types">Option types</h2>
+
+<p>Single character command line options can be combined, so rather than
+typing <code class="prettyprint">docker run -i -t --name test busybox sh</code>,
+you can write <code class="prettyprint">docker run -it --name test busybox sh</code>.</p>
+
+<h3 id="boolean">Boolean</h3>
+
+<p>Boolean options take the form <code class="prettyprint">-d=false</code>. The value you see in the help text is
+the default value which is set if you do <strong>not</strong> specify that flag. If you
+specify a Boolean flag without a value, this will set the flag to <code class="prettyprint">true</code>,
+irrespective of the default value.</p>
+
+<p>For example, running <code class="prettyprint">docker run -d</code> will set the value to <code class="prettyprint">true</code>, so your
+container <strong>will</strong> run in &ldquo;detached&rdquo; mode, in the background.</p>
+
+<p>Options which default to <code class="prettyprint">true</code> (e.g., <code class="prettyprint">docker build --rm=true</code>) can only be
+set to the non-default value by explicitly setting them to <code class="prettyprint">false</code>:</p>
+
+<p>$ docker build &ndash;rm=false .</p>
+
+<h3 id="multi">Multi</h3>
+
+<p>You can specify options like <code class="prettyprint">-a=[]</code> multiple times in a single command line,
+for example in these commands:</p>
+
+<p>$ docker run -a stdin -a stdout -i -t ubuntu /bin/bash
+    $ docker run -a stdin -a stdout -a stderr ubuntu /bin/ls</p>
+
+<p>Sometimes, multiple options can call for a more complex value string as for
+<code class="prettyprint">-v</code>:</p>
+
+<p>$ docker run -v /host:/container example/mysql</p>
+
+<blockquote>
+<p><strong>Note:</strong>
+Do not use the <code class="prettyprint">-t</code> and <code class="prettyprint">-a stderr</code> options together due to
+limitations in the <code class="prettyprint">pty</code> implementation. All <code class="prettyprint">stderr</code> in <code class="prettyprint">pty</code> mode
+simply goes to <code class="prettyprint">stdout</code>.</p>
+</blockquote>
+
+<h3 id="strings-and-integers">Strings and Integers</h3>
+
+<p>Options like <code class="prettyprint">--name=&quot;&quot;</code> expect a string, and they
+can only be specified once. Options like <code class="prettyprint">-c=0</code>
+expect an integer, and they can only be specified once.</p>
+
                     <h1 id="api-reference">API Reference</h1>
 
 <h2 id="list-containers">List Containers</h2>
+
+<blockquote>
+<p>Example request</p>
+</blockquote>
+<pre class="highlight http"><code><span class="nf">GET</span> <span class="nn">/containers/json?all=1&amp;before=8dfafdbc3a40&amp;size=1</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl --unix-socket /var/run/docker.sock http:/containers/json?all<span class="o">=</span>1&amp;before<span class="o">=</span>8dfafdbc3a40&amp;size<span class="o">=</span>1
+</code></pre>
+
+<blockquote>
+<p>Example response</p>
+</blockquote>
 <pre class="highlight json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="nt">"Id"</span><span class="p">:</span><span class="s2">"8dfafdbc3a40"</span><span class="p">,</span><span class="w">
@@ -91,14 +307,12 @@
 
 <p><code class="prettyprint">GET /containers/json</code> </p>
 
-<h3 id="example">Example</h3>
-
-<p><code class="prettyprint">GET /containers/json?all=1&amp;before=8dfafdbc3a40&amp;size=1 HTTP/1.1</code></p>
+<h3 id="query-parameters">Query Parameters</h3>
 
 <table><thead>
 <tr>
-<th>Parameter</th>
-<th>Description</th>
+<th></th>
+<th></th>
 </tr>
 </thead><tbody>
 <tr>
@@ -131,12 +345,18 @@
 </tr>
 </tbody></table>
 
+<h3 id="status-codes">Status Codes</h3>
+
 <table><thead>
 <tr>
-<th>Status code</th>
-<th>Description</th>
+<th></th>
+<th></th>
 </tr>
 </thead><tbody>
+<tr>
+<td><strong>200</strong></td>
+<td>success</td>
+</tr>
 <tr>
 <td><strong>400</strong></td>
 <td>bad parameter</td>
@@ -147,8 +367,386 @@
 </tr>
 </tbody></table>
 
+<h2 id="create-comtainers">Create Comtainers</h2>
+
+<blockquote>
+<p>Example request</p>
+</blockquote>
+<pre class="highlight http"><code><span class="nf">POST</span> <span class="nn">/containers/create</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="s">{</span>
+<span class="s">  "Hostname":"",</span>
+<span class="s">  "Domainname":"",</span>
+<span class="s">  "User":"",</span>
+<span class="s">  "AttachStdin":false,</span>
+<span class="s">  "AttachStdout":true,</span>
+<span class="s">  "AttachStderr":true,</span>
+<span class="s">  "Tty":false,</span>
+<span class="s">  "OpenStdin":false,</span>
+<span class="s">  "StdinOnce":false,</span>
+<span class="s">  "Env":null,</span>
+<span class="s">  "Cmd":[</span>
+<span class="s">    "date"</span>
+<span class="s">  ],</span>
+<span class="s">  "Entrypoint":"",</span>
+<span class="s">  "Image":"ubuntu",</span>
+<span class="s">  "Labels":{</span>
+<span class="s">    "com.example.vendor":"Acme",</span>
+<span class="s">    "com.example.license":"GPL",</span>
+<span class="s">    "com.example.version":"1.0"</span>
+<span class="s">  },</span>
+<span class="s">  "Mounts":[</span>
+<span class="s">    {</span>
+<span class="s">      "Source":"/data",</span>
+<span class="s">      "Destination":"/data",</span>
+<span class="s">      "Mode":"ro,Z",</span>
+<span class="s">      "RW":false</span>
+<span class="s">    }</span>
+<span class="s">  ],</span>
+<span class="s">  "WorkingDir":"",</span>
+<span class="s">  "NetworkDisabled":false,</span>
+<span class="s">  "MacAddress":"12:34:56:78:9a:bc",</span>
+<span class="s">  "ExposedPorts":{</span>
+<span class="s">    "22/tcp":{</span>
+<span class="s">    }</span>
+<span class="s">  },</span>
+<span class="s">  "HostConfig":{</span>
+<span class="s">    "Binds":[</span>
+<span class="s">      "/tmp:/tmp"</span>
+<span class="s">    ],</span>
+<span class="s">    "Links":[</span>
+<span class="s">      "redis3:redis"</span>
+<span class="s">    ],</span>
+<span class="s">    "LxcConf":{</span>
+<span class="s">      "lxc.utsname":"docker"</span>
+<span class="s">    },</span>
+<span class="s">    "Memory":0,</span>
+<span class="s">    "MemorySwap":0,</span>
+<span class="s">    "KernelMemory":0,</span>
+<span class="s">    "CpuShares":512,</span>
+<span class="s">    "CpuPeriod":100000,</span>
+<span class="s">    "CpusetCpus":"0,1",</span>
+<span class="s">    "CpusetMems":"0,1",</span>
+<span class="s">    "BlkioWeight":300,</span>
+<span class="s">    "MemorySwappiness":60,</span>
+<span class="s">    "OomKillDisable":false,</span>
+<span class="s">    "PortBindings":{</span>
+<span class="s">      "22/tcp":[</span>
+<span class="s">        {</span>
+<span class="s">          "HostPort":"11022"</span>
+<span class="s">        }</span>
+<span class="s">      ]</span>
+<span class="s">    },</span>
+<span class="s">    "PublishAllPorts":false,</span>
+<span class="s">    "Privileged":false,</span>
+<span class="s">    "ReadonlyRootfs":false,</span>
+<span class="s">    "Dns":[</span>
+<span class="s">      "8.8.8.8"</span>
+<span class="s">    ],</span>
+<span class="s">    "DnsSearch":[</span>
+<span class="s">      ""</span>
+<span class="s">    ],</span>
+<span class="s">    "ExtraHosts":null,</span>
+<span class="s">    "VolumesFrom":[</span>
+<span class="s">      "parent",</span>
+<span class="s">      "other:ro"</span>
+<span class="s">    ],</span>
+<span class="s">    "CapAdd":[</span>
+<span class="s">      "NET_ADMIN"</span>
+<span class="s">    ],</span>
+<span class="s">    "CapDrop":[</span>
+<span class="s">      "MKNOD"</span>
+<span class="s">    ],</span>
+<span class="s">    "RestartPolicy":{</span>
+<span class="s">      "Name":"",</span>
+<span class="s">      "MaximumRetryCount":0</span>
+<span class="s">    },</span>
+<span class="s">    "NetworkMode":"bridge",</span>
+<span class="s">    "Devices":[</span>
+<span class="s">    ],</span>
+<span class="s">    "Ulimits":[</span>
+<span class="s">    ],</span>
+<span class="s">    "LogConfig":{</span>
+<span class="s">      "Type":"json-file",</span>
+<span class="s">      "Config":{</span>
+<span class="s">      }</span>
+<span class="s">    },</span>
+<span class="s">    "SecurityOpt":[</span>
+<span class="s">    ],</span>
+<span class="s">    "CgroupParent":""</span>
+<span class="s">  }</span>
+<span class="s">}</span>
+</code></pre>
+
+<blockquote>
+<p>Example response**</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"Id"</span><span class="p">:</span><span class="s2">"e90e34656806"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"Warnings"</span><span class="p">:[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="usage">Usage</h3>
+
+<p><code class="prettyprint">POST /containers/create</code></p>
+
+<h3 id="request-body-parameters">Request Body Parameters</h3>
+
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>Hostname</strong></td>
+<td>A string value containing the hostname to use for the container.</td>
+</tr>
+<tr>
+<td><strong>Domainname</strong></td>
+<td>A string value containing the domain name to use for the container.</td>
+</tr>
+<tr>
+<td><strong>User</strong></td>
+<td>A string value specifying the user inside the container.</td>
+</tr>
+<tr>
+<td><strong>Memory</strong></td>
+<td>Memory limit in bytes.</td>
+</tr>
+<tr>
+<td><strong>MemorySwap</strong></td>
+<td>Total memory limit (memory + swap); set <code class="prettyprint">-1</code> to disable swap You must use this with <code class="prettyprint">memory</code> and make the swap value larger than <code class="prettyprint">memory</code>.</td>
+</tr>
+<tr>
+<td><strong>KernelMemory</strong></td>
+<td>Kernel memory limit in bytes.</td>
+</tr>
+<tr>
+<td><strong>CpuShares</strong></td>
+<td>An integer value containing the container&rsquo;s CPU Shares (ie. the relative weight vs other containers).</td>
+</tr>
+<tr>
+<td><strong>CpuPeriod</strong></td>
+<td>The length of a CPU period in microseconds.</td>
+</tr>
+<tr>
+<td><strong>Cpuset</strong></td>
+<td>Deprecated please don&rsquo;t use. Use <code class="prettyprint">CpusetCpus</code> instead.</td>
+</tr>
+<tr>
+<td><strong>CpusetCpus</strong></td>
+<td>String value containing the <code class="prettyprint">cgroups CpusetCpus</code> to use.</td>
+</tr>
+<tr>
+<td><strong>CpusetMems</strong></td>
+<td>Memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems.</td>
+</tr>
+<tr>
+<td><strong>BlkioWeight</strong></td>
+<td>Block IO weight (relative weight) accepts a weight value between 10 and 1000.</td>
+</tr>
+<tr>
+<td><strong>MemorySwappiness</strong></td>
+<td>Tune a container&rsquo;s memory swappiness behavior. Accepts an integer between 0 and 100.</td>
+</tr>
+<tr>
+<td><strong>OomKillDisable</strong></td>
+<td>Boolean value, whether to disable OOM Killer for the container or not.</td>
+</tr>
+<tr>
+<td><strong>AttachStdin</strong></td>
+<td>Boolean value, attaches to <code class="prettyprint">stdin</code>.</td>
+</tr>
+<tr>
+<td><strong>AttachStdout</strong></td>
+<td>Boolean value, attaches to <code class="prettyprint">stdout</code>.</td>
+</tr>
+<tr>
+<td><strong>AttachStderr</strong></td>
+<td>Boolean value, attaches to <code class="prettyprint">stderr</code>.</td>
+</tr>
+<tr>
+<td><strong>Tty</strong></td>
+<td>Boolean value, Attach standard streams to a <code class="prettyprint">tty</code>, including <code class="prettyprint">stdin</code> if it is not closed.</td>
+</tr>
+<tr>
+<td><strong>OpenStdin</strong></td>
+<td>Boolean value, opens stdin,</td>
+</tr>
+<tr>
+<td><strong>StdinOnce</strong></td>
+<td>Boolean value, close <code class="prettyprint">stdin</code> after the 1 attached client disconnects.</td>
+</tr>
+<tr>
+<td><strong>Env</strong></td>
+<td>A list of environment variables in the form of <code class="prettyprint">VAR=value</code></td>
+</tr>
+<tr>
+<td><strong>Labels</strong></td>
+<td>Adds a map of labels to a container. To specify a map: <code class="prettyprint">{&quot;key&quot;:&quot;value&quot;[,&quot;key2&quot;:&quot;value2&quot;]}</code></td>
+</tr>
+<tr>
+<td><strong>Cmd</strong></td>
+<td>Command to run specified as a string or an array of strings.</td>
+</tr>
+<tr>
+<td><strong>Entrypoint</strong></td>
+<td>Set the entry point for the container as a string or an array of strings.</td>
+</tr>
+<tr>
+<td><strong>Image</strong></td>
+<td>A string specifying the image name to use for the container.</td>
+</tr>
+<tr>
+<td><strong>Mounts</strong></td>
+<td>An array of mount points in the container.</td>
+</tr>
+<tr>
+<td><strong>WorkingDir</strong></td>
+<td>A string specifying the working directory for commands to run in.</td>
+</tr>
+<tr>
+<td><strong>NetworkDisabled</strong></td>
+<td>Boolean value, when true disables networking for the container</td>
+</tr>
+<tr>
+<td><strong>ExposedPorts</strong></td>
+<td>An object mapping ports to an empty object in the form of: `&ldquo;ExposedPorts&rdquo;: { &ldquo;<port>/&lt;tcp</td>
+</tr>
+<tr>
+<td><strong>HostConfig</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Binds</strong></td>
+<td>A list of volume bindings for this container. Each volume binding is a string in one of these forms: <code class="prettyprint">container_path</code> to create a new volume for the container, <code class="prettyprint">host_path:container_path</code> to bindmount a host path into the container, <code class="prettyprint">host_path:container_path:ro</code> to make the bindmount read-only inside the container.</td>
+</tr>
+<tr>
+<td><strong>Links</strong></td>
+<td>A list of links for the container. Each link entry should be in the form of <code class="prettyprint">container_name:alias</code>.</td>
+</tr>
+<tr>
+<td><strong>LxcConf</strong></td>
+<td>LXC specific configurations. These configurations only work when using the <code class="prettyprint">lxc</code> execution driver.</td>
+</tr>
+<tr>
+<td><strong>PortBindings</strong></td>
+<td>A map of exposed container ports and the host port they should map to. A JSON object in the form <code class="prettyprint">{ &lt;port&gt;/&lt;protocol&gt;: [{ &quot;HostPort&quot;: &quot;&lt;port&gt;&quot; }] }</code>.  Take note that <code class="prettyprint">port</code> is specified as a string and not an integer value.</td>
+</tr>
+<tr>
+<td><strong>PublishAllPorts</strong></td>
+<td>Allocates a random host port for all of a container&rsquo;s exposed ports. Specified as a boolean value.</td>
+</tr>
+<tr>
+<td><strong>Privileged</strong></td>
+<td>Gives the container full access to the host. Specified as a boolean value.</td>
+</tr>
+<tr>
+<td><strong>ReadonlyRootfs</strong></td>
+<td>Mount the container&rsquo;s root filesystem as read only. Specified as a boolean value.</td>
+</tr>
+<tr>
+<td><strong>Dns</strong></td>
+<td>A list of DNS servers for the container to use.</td>
+</tr>
+<tr>
+<td><strong>DnsSearch</strong></td>
+<td>A list of DNS search domains</td>
+</tr>
+<tr>
+<td><strong>ExtraHosts</strong></td>
+<td>A list of hostnames/IP mappings to add to the container&rsquo;s <code class="prettyprint">/etc/hosts</code> file. Specified in the form <code class="prettyprint">[&quot;hostname:IP&quot;]</code>.</td>
+</tr>
+<tr>
+<td><strong>VolumesFrom</strong></td>
+<td>A list of volumes to inherit from another container. Specified in the form `<container name>[:&lt;ro</td>
+</tr>
+<tr>
+<td><strong>CapAdd</strong></td>
+<td>A list of kernel capabilities to add to the container.</td>
+</tr>
+<tr>
+<td><strong>Capdrop</strong></td>
+<td>A list of kernel capabilities to drop from the container.</td>
+</tr>
+<tr>
+<td><strong>RestartPolicy</strong></td>
+<td>The behavior to apply when the container exits.  The value is an object with a <code class="prettyprint">Name</code> property of either <code class="prettyprint">&quot;always&quot;</code> to always restart, <code class="prettyprint">&quot;unlessstopped&quot;</code> to restart always except when user has manually stopped the container or <code class="prettyprint">&quot;onfailure&quot;</code> to restart only when the container exit code is nonzero.  If <code class="prettyprint">on-failure</code> is used, <code class="prettyprint">MaximumRetryCount</code> controls the number of times to retry before giving up. The default is not to restart. (optional) An ever increasing delay (double the previous delay, starting at 100mS) is added before each restart to prevent flooding the server.</td>
+</tr>
+<tr>
+<td><strong>NetworkMode</strong></td>
+<td>Sets the networking mode for the container. Supported         values are: <code class="prettyprint">bridge</code>, <code class="prettyprint">host</code>, and `container:&lt;name</td>
+</tr>
+<tr>
+<td><strong>Devices</strong></td>
+<td>A list of devices to add to the container specified as a JSON object in the form <code class="prettyprint">{ &quot;PathOnHost&quot;: &quot;/dev/deviceName&quot;, &quot;PathInContainer&quot;: &quot;/dev/deviceName&quot;, &quot;CgroupPermissions&quot;: &quot;mrw&quot;}</code></td>
+</tr>
+<tr>
+<td><strong>Ulimits</strong></td>
+<td>A list of ulimits to set in the container, specified as <code class="prettyprint">{ &quot;Name&quot;: &lt;name&gt;, &quot;Soft&quot;: &lt;soft limit&gt;, &quot;Hard&quot;: &lt;hard limit&gt; }</code>, for example: <code class="prettyprint">Ulimits: { &quot;Name&quot;: &quot;nofile&quot;, &quot;Soft&quot;: 1024, &quot;Hard&quot;, 2048 }}</code></td>
+</tr>
+<tr>
+<td><strong>SecurityOpt</strong></td>
+<td>A list of string values to customize labels for MLS systems, such as SELinux.</td>
+</tr>
+<tr>
+<td><strong>LogConfig</strong></td>
+<td>Log configuration for the container, specified as a JSON object in the form: <code class="prettyprint">{ &quot;Type&quot;: &quot;&lt;driver_name&gt;&quot;, &quot;Config&quot;: {&quot;key1&quot;: &quot;val1&quot;}}</code>. Available types: <code class="prettyprint">json-file</code>, <code class="prettyprint">syslog</code>, <code class="prettyprint">journald</code>, <code class="prettyprint">gelf</code>, <code class="prettyprint">none</code>.<code class="prettyprint">json-file</code> logging driver.</td>
+</tr>
+<tr>
+<td><strong>CgroupParent</strong></td>
+<td>Path to <code class="prettyprint">cgroups</code> under which the container&rsquo;s <code class="prettyprint">cgroup</code> is created. If the path is not absolute, the path is considered to be relative to the <code class="prettyprint">cgroups</code> path of the init process. Cgroups are created if they do not already exist.</td>
+</tr>
+</tbody></table>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>name</strong></td>
+<td>Assign the specified name to the container. Must match <code class="prettyprint">/?[a-zA-Z0-9_-]+</code>.</td>
+</tr>
+</tbody></table>
+
+<h3 id="status-codes">Status Codes</h3>
+
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>201</strong></td>
+<td>no error</td>
+</tr>
+<tr>
+<td><strong>404</strong></td>
+<td>no such container</td>
+</tr>
+<tr>
+<td><strong>406</strong></td>
+<td>impossible to attach (container not running)</td>
+</tr>
+<tr>
+<td><strong>500</strong></td>
+<td>server error</td>
+</tr>
+</tbody></table>
+
             </div>
             <div class="dark-box">
+                    <div class="lang-selector">
+                                <a href="#" data-language-name="http">http</a>
+                                <a href="#" data-language-name="shell">curl</a>
+                    </div>
             </div>
         </div>
     </body>
