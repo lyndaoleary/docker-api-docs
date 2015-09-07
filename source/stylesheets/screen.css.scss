@@ -321,7 +321,7 @@ html, body {
     font-weight: bold;
     a {
         display: block;
-        float:left;
+        float: left;
         color: $lang-select-text;
         text-decoration: none;
         padding: 0 10px;
@@ -398,12 +398,13 @@ html, body {
         @extend %header-font;
         font-size: 20px;
         margin-bottom: 0.5em;
+        margin-top: 2em;
     }
 
     // h2s right after h1s should bump right up
     // against the h1s.
     h1 + h2, h1 + div + h2 {
-        margin-top: $h1-margin-bottom * -1;
+        margin-top: $h1-margin-bottom * -0.5;
         border-top: none;
     }
 
@@ -425,35 +426,35 @@ html, body {
     }
 
     table {
-      margin-bottom: 1em;
-      overflow: auto;
-      th,td {
-        text-align: left;
-        vertical-align: top;
-        line-height: 1.7;
-      }
+        margin-bottom: 1em;
+        overflow: auto;
+        th,td {
+            text-align: left;
+            vertical-align: top;
+            line-height: 1.7;
+        }
 
-      th {
-        padding: 5px 10px;
-        border-bottom: 1px solid #ccc;
-        vertical-align: bottom;
-      }
+        th {
+            padding: 5px 10px;
+            border-bottom: 1px solid #ccc;
+            vertical-align: bottom;
+        }
 
-      td {
-        padding: 10px;
-      }
+        td {
+            padding: 10px;
+        }
 
-      tr:last-child {
-        border-bottom: 1px solid #ccc;
-      }
+        tr:last-child {
+            border-bottom: 1px solid #ccc;
+        }
 
-      tr:nth-child(odd)>td {
-        background-color: lighten($nav-bg, 7.0%);
-      }
+        tr:nth-child(odd)>td {
+            background-color: lighten($nav-bg, 7.0%);
+        }
 
-      tr:nth-child(even)>td {
-        background-color: lighten($nav-bg, 4.8%);
-      }
+        tr:nth-child(even)>td {
+            background-color: lighten($nav-bg, 4.8%);
+        }
     }
 
     dt {
@@ -539,20 +540,17 @@ html, body {
 
 .content {
     pre, blockquote {
-        background-color: $code-bg;
+        position:relative;
+        top: 0;
+        background-color: $code-annotation-bg;
         color: #fff;
-
-        padding: 2em $main-padding;
+        padding: 0.5em $main-padding;
         margin: 0;
         width: $examples-width;
-
         float:right;
         clear:right;
-
-        box-sizing: border-box;
-        @include text-shadow(0px 1px 2px rgba(0,0,0,0.4));
-
-        @extend %right-col;
+        @include box-sizing(border-box);
+        @include text-shadow(none);
 
         &>p { margin: 0; }
 
@@ -562,19 +560,42 @@ html, body {
             border-bottom: dashed 1px #ccc;
         }
     }
+    pre.javascript {
+        display:none;
+    }
 
+    pre.python {
+        display:none;
+    }
     pre {
         @extend %code-font;
     }
 
+    blockquote:before {
+        content: "";
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        background-image: url("../images/triangle.gif");
+        background-repeat: no-repeat;
+        position: absolute;
+        left: -11px;
+        top: 0px;
+        z-index: 1000;
+    }
+
     blockquote {
+        border-top: 1em solid $examples-bg;
         &>p {
             background-color: $code-annotation-bg;
-            border-radius: 5px;
             padding: $code-annotation-padding;
             color: #ccc;
-            border-top: 1px solid #000;
-            border-bottom: 1px solid #404040;
+        }
+        a:first-child:before {
+            content: url('../images/lab.png');
+            position: relative;
+            top: 10px;
+            left: -6px;
         }
     }
 }
