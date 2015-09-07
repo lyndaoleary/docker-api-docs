@@ -27,17 +27,17 @@ $header-bg: #22354C;
 $main-bg: #fff;
 $nav-bg: #E5EDF4;
 $examples-bg: #F9FBFC;
-$code-bg: #002b36;
-$code-annotation-bg: #073642;
+$code-bg: #002B36;
+$code-annotation-bg: $code-bg;
 $nav-subitem-bg: none;
 $nav-active-bg: rgb(34, 184, 235);
 $lang-select-border: #000;
-$lang-select-bg: #111111;
+$lang-select-bg: $code-bg;
 $lang-select-active-bg: $examples-bg; // feel free to change this to blue or something
 $lang-select-pressed-bg: #111; // color of language tab bg when mouse is pressed
-$aside-notice-bg: none;
-$aside-warning-bg: #f1f1f2;
-$aside-success-bg: #6ac174;
+$aside-notice-bg: rgb(143, 188, 212);
+$aside-warning-bg: rgb(201, 122, 126);
+$aside-success-bg: rgb(106, 193, 116);
 
 // TEXT COLORS
 ////////////////////
@@ -59,7 +59,7 @@ $nav-padding: 30px; // padding to left and right of navbar
 $nav-item-padding: 2px; // padding between nav items
 $nav-v-padding: 10px; // padding used vertically around search boxes and results
 $nav-indent: 5px; // extra padding for ToC subitems
-$code-annotation-padding: 13px; // padding inside code annotations
+$code-annotation-padding: 5px; // padding inside code annotations
 $h1-margin-bottom: 21px; // padding under the largest header tags
 $tablet-width: 930px; // min width before reverting to tablet size
 $phone-width: $tablet-width - $nav-width; // min width before reverting to mobile size
