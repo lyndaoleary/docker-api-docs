@@ -77,19 +77,22 @@ If you want to enable memory and swap accounting see <a href="/installation/ubun
 
                     <h1 id="command-line-reference">Command Line Reference</h1>
 
-<p>To list available commands, either run <code class="prettyprint">docker</code> with no parameters
-or execute <code class="prettyprint">docker help</code>:</p>
+<blockquote>
+<p>Example</p>
+</blockquote>
+<pre class="highlight plaintext"><code>$ docker
+  Usage: docker [OPTIONS] COMMAND [arg...]
+         docker daemon [ --help | ... ]
+         docker [ --help | -v | --version ]
 
-<p>$ docker
-      Usage: docker [OPTIONS] COMMAND [arg&hellip;]
-             docker daemon [ &ndash;help | &hellip; ]
-             docker [ &ndash;help | -v | &ndash;version ]</p>
+    -H, --host=[]: The socket(s) to bind to in daemon mode, specified using one or more tcp://host:port, unix:///path/to/socket, fd://* or fd://socketfd.
 
-<p>-H, &ndash;host=[]: The socket(s) to bind to in daemon mode, specified using one or more tcp://host:port, unix:///path/to/socket, fd://* or fd://socketfd.</p>
+  A self-sufficient runtime for Linux containers.
+  ...
+</code></pre>
 
-<p>A self-sufficient runtime for Linux containers.</p>
-
-<p>&hellip;</p>
+<p>To list available commands, run <code class="prettyprint">docker</code> with no parameters
+or execute <code class="prettyprint">docker help</code>.</p>
 
 <p>Depending on your Docker system configuration, you may be required to preface
 each <code class="prettyprint">docker</code> command with <code class="prettyprint">sudo</code>. To avoid having to use <code class="prettyprint">sudo</code> with the
@@ -99,27 +102,67 @@ each <code class="prettyprint">docker</code> command with <code class="prettypri
 <p>For more information about installing Docker or <code class="prettyprint">sudo</code> configuration, refer to
 the <a href="/installation">installation</a> instructions for your operating system.</p>
 
-<h2 id="environment-variables">Environment variables</h2>
+<h2 id="supported-environment-variables">Supported environment variables</h2>
 
-<p>For easy reference, the following list of environment variables are supported
-by the <code class="prettyprint">docker</code> command line:</p>
+<p>The following table lists the environment variables supported by the Docker Engine.</p>
 
-<ul>
-<li><code class="prettyprint">DOCKER_CONFIG</code> The location of your client configuration files.</li>
-<li><code class="prettyprint">DOCKER_CERT_PATH</code> The location of your authentication keys.</li>
-<li><code class="prettyprint">DOCKER_DRIVER</code> The graph driver to use.</li>
-<li><code class="prettyprint">DOCKER_HOST</code> Daemon socket to connect to.</li>
-<li><code class="prettyprint">DOCKER_NOWARN_KERNEL_VERSION</code> Prevent warnings that your Linux kernel is
-unsuitable for Docker.</li>
-<li><code class="prettyprint">DOCKER_RAMDISK</code> If set this will disable &lsquo;pivot_root&rsquo;.</li>
-<li><code class="prettyprint">DOCKER_TLS_VERIFY</code> When set Docker uses TLS and verifies the remote.</li>
-<li><code class="prettyprint">DOCKER_CONTENT_TRUST</code> When set Docker uses notary to sign and verify images.
-Equates to <code class="prettyprint">--disable-content-trust=false</code> for build, create, pull, push, run.</li>
-<li><code class="prettyprint">DOCKER_TMPDIR</code> Location for temporary Docker files.</li>
-</ul>
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">DOCKER_CONFIG</code></td>
+<td>The location of your client configuration files.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">DOCKER_CERT_PATH</code></td>
+<td>The location of your authentication keys.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">DOCKER_DRIVER</code></td>
+<td>The graph driver to use.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">DOCKER_HOST</code></td>
+<td>Daemon socket to connect to.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">DOCKER_NOWARN_KERNEL_VERSION</code></td>
+<td>Prevent warnings that your Linux kernel is unsuitable for Docker.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">DOCKER_RAMDISK</code></td>
+<td>If set this will disable &lsquo;pivot_root&rsquo;.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">DOCKER_TLS_VERIFY</code></td>
+<td>When set Docker uses TLS and verifies the remote.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">DOCKER_CONTENT_TRUST</code></td>
+<td>When set Docker uses notary to sign and verify images. Equates to <code class="prettyprint">--disable-content-trust=false</code> for build, create, pull, push, run.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">DOCKER_TMPDIR</code></td>
+<td>Location for temporary Docker files.</td>
+</tr>
+</tbody></table>
 
-<p>Because Docker is developed using &#39;Go&rsquo;, you can also use any environment
-variables used by the &#39;Go&rsquo; runtime. In particular, you may find these useful:</p>
+<h3 id="proxy-configuration">Proxy configuration</h3>
+
+<blockquote>
+<p>Example</p>
+</blockquote>
+<pre class="highlight plaintext"><code>$ export HTTP_PROXY="http://web-proxy.example.org:8080/"
+$ export HTTPS_PROXY="http://web-proxy.example.org:8080/"
+$ export NO_PROXY="localhost,127.0.0.1,web-proxy.example.org"
+
+$ docker run ubuntu echo Hello World
+</code></pre>
+
+<p>To set proxy configuration, use:</p>
 
 <ul>
 <li><code class="prettyprint">HTTP_PROXY</code></li>
@@ -127,28 +170,44 @@ variables used by the &#39;Go&rsquo; runtime. In particular, you may find these 
 <li><code class="prettyprint">NO_PROXY</code></li>
 </ul>
 
-<p>These Go environment variables are case-insensitive. See the
-<a href="http://golang.org/pkg/net/http/">Go specification</a> for details on these
-variables.</p>
+<p>These Go environment variables are case-insensitive. For more information about these variables, see
+<a href="http://golang.org/pkg/net/http/">Go specification</a>.</p>
 
 <h2 id="configuration-files">Configuration files</h2>
+
+<blockquote>
+<p>Example</p>
+</blockquote>
+<pre class="highlight plaintext"><code>
+docker --config ~/testconfigs/ ps
+
+</code></pre>
 
 <p>By default, the Docker command line stores its configuration files in a
 directory called <code class="prettyprint">.docker</code> within your <code class="prettyprint">HOME</code> directory. However, you can
 specify a different location via the <code class="prettyprint">DOCKER_CONFIG</code> environment variable
-or the <code class="prettyprint">--config</code> command line option. If both are specified, then the
-<code class="prettyprint">--config</code> option overrides the <code class="prettyprint">DOCKER_CONFIG</code> environment variable.
-For example:</p>
+or the <code class="prettyprint">--config</code> command line option. 
+If both are specified, then the
+<code class="prettyprint">--config</code> option overrides the <code class="prettyprint">DOCKER_CONFIG</code> environment variable.</p>
 
-<p>docker &ndash;config ~/testconfigs/ ps</p>
-
-<p>Instructs Docker to use the configuration files in your <code class="prettyprint">~/testconfigs/</code>
+<p>The example instructs Docker to use the configuration files in your <code class="prettyprint">~/testconfigs/</code>
 directory when running the <code class="prettyprint">ps</code> command.</p>
 
 <p>Docker manages most of the files in the configuration directory
 and you should not modify them. However, you <em>can modify</em> the
 <code class="prettyprint">config.json</code> file to control certain aspects of how the <code class="prettyprint">docker</code>
 command behaves.</p>
+
+<blockquote>
+<p>Sample <code class="prettyprint">config.json</code> file:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"HttpHeaders"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"MyHeader"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MyValue"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"psFormat"</span><span class="p">:</span><span class="w"> </span><span class="s2">"table {{.ID}}\\t{{.Image}}\\t{{.Command}}\\t{{.Labels}}"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
 <p>Currently, you can modify the <code class="prettyprint">docker</code> command behavior using environment
 variables or command-line options. You can also use options within
@@ -168,35 +227,30 @@ not allow these headers to change any headers it sets for itself.</p>
 When the <code class="prettyprint">--format</code> flag is not provided with the <code class="prettyprint">docker ps</code> command,
 Docker&rsquo;s client uses this property. If this property is not set, the client
 falls back to the default table format. For a list of supported formatting
-directives, see the <a href="../ps"><strong>Formatting</strong> section in the <code class="prettyprint">docker ps</code> documentation</a></p>
+directives, see the <a href="../ps"><strong>Formatting</strong> section in the <code class="prettyprint">docker ps</code> documentation</a>.</p>
 
-<p>Following is a sample <code class="prettyprint">config.json</code> file:</p>
+<h2 id="help-option">Help option</h2>
 
-<p>{
-      &ldquo;HttpHeaders&rdquo;: {
-        &ldquo;MyHeader&rdquo;: &ldquo;MyValue&rdquo;
-      },
-      &ldquo;psFormat&rdquo;: &ldquo;table {{.ID}}\t{{.Image}}\t{{.Command}}\t{{.Labels}}&rdquo;
-    }</p>
+<blockquote>
+<p>Example</p>
+</blockquote>
+<pre class="highlight plaintext"><code>$ docker run --help
 
-<h2 id="help">Help</h2>
+Usage: docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
 
-<p>To list the help on any command just execute the command, followed by the
+Run a command in a new container
+
+  -a, --attach=[]            Attach to STDIN, STDOUT or STDERR
+  -c, --cpu-shares=0         CPU shares (relative weight)
+...
+</code></pre>
+
+<p>To view help on a command, execute the command followed by the
 <code class="prettyprint">--help</code> option.</p>
-
-<p>$ docker run &ndash;help</p>
-
-<p>Usage: docker run [OPTIONS] IMAGE [COMMAND] [ARG&hellip;]</p>
-
-<p>Run a command in a new container</p>
-
-<p>-a, &ndash;attach=[]            Attach to STDIN, STDOUT or STDERR
-      -c, &ndash;cpu-shares=0         CPU shares (relative weight)
-    &hellip;</p>
 
 <h2 id="option-types">Option types</h2>
 
-<p>Single character command line options can be combined, so rather than
+<p>Single character command line options can be combined. Rather than
 typing <code class="prettyprint">docker run -i -t --name test busybox sh</code>,
 you can write <code class="prettyprint">docker run -it --name test busybox sh</code>.</p>
 
@@ -207,33 +261,31 @@ the default value which is set if you do <strong>not</strong> specify that flag.
 specify a Boolean flag without a value, this will set the flag to <code class="prettyprint">true</code>,
 irrespective of the default value.</p>
 
-<p>For example, running <code class="prettyprint">docker run -d</code> will set the value to <code class="prettyprint">true</code>, so your
+<p>For example:
+Running <code class="prettyprint">docker run -d</code> will set the value to <code class="prettyprint">true</code>, so your
 container <strong>will</strong> run in &ldquo;detached&rdquo; mode, in the background.</p>
 
 <p>Options which default to <code class="prettyprint">true</code> (e.g., <code class="prettyprint">docker build --rm=true</code>) can only be
 set to the non-default value by explicitly setting them to <code class="prettyprint">false</code>:</p>
 
-<p>$ docker build &ndash;rm=false .</p>
+<p><code class="prettyprint">$ docker build --rm=false .</code></p>
 
 <h3 id="multi">Multi</h3>
 
-<p>You can specify options like <code class="prettyprint">-a=[]</code> multiple times in a single command line,
-for example in these commands:</p>
+<p>You can specify options like <code class="prettyprint">-a=[]</code> multiple times in a single command line.</p>
 
-<p>$ docker run -a stdin -a stdout -i -t ubuntu /bin/bash
-    $ docker run -a stdin -a stdout -a stderr ubuntu /bin/ls</p>
+<p>For example:</p>
+
+<p><code class="prettyprint">$ docker run -a stdin -a stdout -a stderr ubuntu /bin/ls</code></p>
 
 <p>Sometimes, multiple options can call for a more complex value string as for
 <code class="prettyprint">-v</code>:</p>
 
-<p>$ docker run -v /host:/container example/mysql</p>
+<p><code class="prettyprint">$ docker run -v /host:/container example/mysql</code></p>
 
-<blockquote>
-<p><strong>Note:</strong>
-Do not use the <code class="prettyprint">-t</code> and <code class="prettyprint">-a stderr</code> options together due to
-limitations in the <code class="prettyprint">pty</code> implementation. All <code class="prettyprint">stderr</code> in <code class="prettyprint">pty</code> mode
-simply goes to <code class="prettyprint">stdout</code>.</p>
-</blockquote>
+<aside class="notice">Do not use the `-t` and `-a stderr` options together due to
+limitations in the `pty` implementation. All `stderr` in `pty` mode
+simply goes to `stdout`</aside>
 
 <h3 id="strings-and-integers">Strings and Integers</h3>
 
@@ -367,7 +419,7 @@ expect an integer, and they can only be specified once.</p>
 </tr>
 </tbody></table>
 
-<h2 id="create-comtainers">Create Comtainers</h2>
+<h2 id="create-container">Create Container</h2>
 
 <blockquote>
 <p>Example request</p>
@@ -476,6 +528,111 @@ expect an integer, and they can only be specified once.</p>
 <span class="s">    "CgroupParent":""</span>
 <span class="s">  }</span>
 <span class="s">}</span>
+</code></pre>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl -d <span class="s1">'
+{
+  "Hostname":"",
+  "Domainname":"",
+  "User":"",
+  "AttachStdin":false,
+  "AttachStdout":true,
+  "AttachStderr":true,
+  "Tty":false,
+  "OpenStdin":false,
+  "StdinOnce":false,
+  "Env":null,
+  "Cmd":[
+    "date"
+  ],
+  "Entrypoint":"",
+  "Image":"ubuntu",
+  "Labels":{
+    "com.example.vendor":"Acme",
+    "com.example.license":"GPL",
+    "com.example.version":"1.0"
+  },
+  "Mounts":[
+    {
+      "Source":"/data",
+      "Destination":"/data",
+      "Mode":"ro,Z",
+      "RW":false
+    }
+  ],
+  "WorkingDir":"",
+  "NetworkDisabled":false,
+  "MacAddress":"12:34:56:78:9a:bc",
+  "ExposedPorts":{
+    "22/tcp":{
+    }
+  },
+  "HostConfig":{
+    "Binds":[
+      "/tmp:/tmp"
+    ],
+    "Links":[
+      "redis3:redis"
+    ],
+    "LxcConf":{
+      "lxc.utsname":"docker"
+    },
+    "Memory":0,
+    "MemorySwap":0,
+    "KernelMemory":0,
+    "CpuShares":512,
+    "CpuPeriod":100000,
+    "CpusetCpus":"0,1",
+    "CpusetMems":"0,1",
+    "BlkioWeight":300,
+    "MemorySwappiness":60,
+    "OomKillDisable":false,
+    "PortBindings":{
+      "22/tcp":[
+        {
+          "HostPort":"11022"
+        }
+      ]
+    },
+    "PublishAllPorts":false,
+    "Privileged":false,
+    "ReadonlyRootfs":false,
+    "Dns":[
+      "8.8.8.8"
+    ],
+    "DnsSearch":[
+      ""
+    ],
+    "ExtraHosts":null,
+    "VolumesFrom":[
+      "parent",
+      "other:ro"
+    ],
+    "CapAdd":[
+      "NET_ADMIN"
+    ],
+    "CapDrop":[
+      "MKNOD"
+    ],
+    "RestartPolicy":{
+      "Name":"",
+      "MaximumRetryCount":0
+    },
+    "NetworkMode":"bridge",
+    "Devices":[
+    ],
+    "Ulimits":[
+    ],
+    "LogConfig":{
+      "Type":"json-file",
+      "Config":{
+      }
+    },
+    "SecurityOpt":[
+    ],
+    "CgroupParent":""
+  }
+}
+'</span> -H <span class="s1">'Content-Type: application/json'</span> --unix-socket /var/run/docker.sock http:/containers/create
 </code></pre>
 
 <blockquote>
