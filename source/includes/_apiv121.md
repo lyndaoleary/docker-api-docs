@@ -84,7 +84,7 @@ $ curl --unix-socket /var/run/docker.sock http:/containers/json?all=1&before=8df
 **400**        | bad parameter
 **500**        | server error
 
-## Create Comtainers
+## Create Container
 
 >Example request
 
@@ -193,6 +193,113 @@ Content-Type: application/json
     "CgroupParent":""
   }
 }
+```
+
+```shell
+$ curl -d '
+{
+  "Hostname":"",
+  "Domainname":"",
+  "User":"",
+  "AttachStdin":false,
+  "AttachStdout":true,
+  "AttachStderr":true,
+  "Tty":false,
+  "OpenStdin":false,
+  "StdinOnce":false,
+  "Env":null,
+  "Cmd":[
+    "date"
+  ],
+  "Entrypoint":"",
+  "Image":"ubuntu",
+  "Labels":{
+    "com.example.vendor":"Acme",
+    "com.example.license":"GPL",
+    "com.example.version":"1.0"
+  },
+  "Mounts":[
+    {
+      "Source":"/data",
+      "Destination":"/data",
+      "Mode":"ro,Z",
+      "RW":false
+    }
+  ],
+  "WorkingDir":"",
+  "NetworkDisabled":false,
+  "MacAddress":"12:34:56:78:9a:bc",
+  "ExposedPorts":{
+    "22/tcp":{
+    }
+  },
+  "HostConfig":{
+    "Binds":[
+      "/tmp:/tmp"
+    ],
+    "Links":[
+      "redis3:redis"
+    ],
+    "LxcConf":{
+      "lxc.utsname":"docker"
+    },
+    "Memory":0,
+    "MemorySwap":0,
+    "KernelMemory":0,
+    "CpuShares":512,
+    "CpuPeriod":100000,
+    "CpusetCpus":"0,1",
+    "CpusetMems":"0,1",
+    "BlkioWeight":300,
+    "MemorySwappiness":60,
+    "OomKillDisable":false,
+    "PortBindings":{
+      "22/tcp":[
+        {
+          "HostPort":"11022"
+        }
+      ]
+    },
+    "PublishAllPorts":false,
+    "Privileged":false,
+    "ReadonlyRootfs":false,
+    "Dns":[
+      "8.8.8.8"
+    ],
+    "DnsSearch":[
+      ""
+    ],
+    "ExtraHosts":null,
+    "VolumesFrom":[
+      "parent",
+      "other:ro"
+    ],
+    "CapAdd":[
+      "NET_ADMIN"
+    ],
+    "CapDrop":[
+      "MKNOD"
+    ],
+    "RestartPolicy":{
+      "Name":"",
+      "MaximumRetryCount":0
+    },
+    "NetworkMode":"bridge",
+    "Devices":[
+    ],
+    "Ulimits":[
+    ],
+    "LogConfig":{
+      "Type":"json-file",
+      "Config":{
+      }
+    },
+    "SecurityOpt":[
+    ],
+    "CgroupParent":""
+  }
+}
+' -H 'Content-Type: application/json' --unix-socket /var/run/docker.sock http:/containers/create
 ```
 
 >Example response**

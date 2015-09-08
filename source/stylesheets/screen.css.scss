@@ -382,6 +382,10 @@ html, body {
         clear:both;
     }
 
+    a {
+        color: $nav-text;
+    }
+
     h1 {
         @extend %header-font;
         font-size: 27px;
@@ -585,7 +589,6 @@ html, body {
     }
 
     blockquote {
-        border-top: 1em solid $examples-bg;
         &>p {
             background-color: $code-annotation-bg;
             padding: $code-annotation-padding;
