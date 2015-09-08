@@ -1,18 +1,20 @@
 # Command Line Reference
 
+> Example
+
+```cli
+$ docker
+  Usage: docker [OPTIONS] COMMAND [arg...]
+         docker daemon [ --help | ... ]
+         docker [ --help | -v | --version ]
+
+    -H, --host=[]: The socket(s) to bind to in daemon mode, specified using one or more tcp://host:port, unix:///path/to/socket, fd://* or fd://socketfd.
+
+  A self-sufficient runtime for Linux containers.
+  ...
+```
 To list available commands, either run `docker` with no parameters
-or execute `docker help`:
-
-    $ docker
-      Usage: docker [OPTIONS] COMMAND [arg...]
-             docker daemon [ --help | ... ]
-             docker [ --help | -v | --version ]
-
-        -H, --host=[]: The socket(s) to bind to in daemon mode, specified using one or more tcp://host:port, unix:///path/to/socket, fd://* or fd://socketfd.
-
-      A self-sufficient runtime for Linux containers.
-
-      ...
+or execute `docker help`
 
 Depending on your Docker system configuration, you may be required to preface
 each `docker` command with `sudo`. To avoid having to use `sudo` with the
@@ -24,23 +26,33 @@ the [installation](/installation) instructions for your operating system.
 
 ## Environment variables
 
-For easy reference, the following list of environment variables are supported
-by the `docker` command line:
+The following table lists the environment variables that are supported by the Docker Engine.
 
-* `DOCKER_CONFIG` The location of your client configuration files.
-* `DOCKER_CERT_PATH` The location of your authentication keys.
-* `DOCKER_DRIVER` The graph driver to use.
-* `DOCKER_HOST` Daemon socket to connect to.
-* `DOCKER_NOWARN_KERNEL_VERSION` Prevent warnings that your Linux kernel is
-  unsuitable for Docker.
-* `DOCKER_RAMDISK` If set this will disable 'pivot_root'.
-* `DOCKER_TLS_VERIFY` When set Docker uses TLS and verifies the remote.
-* `DOCKER_CONTENT_TRUST` When set Docker uses notary to sign and verify images.
-  Equates to `--disable-content-trust=false` for build, create, pull, push, run.
-* `DOCKER_TMPDIR` Location for temporary Docker files.
+|                 |                                                  |
+|-----------------|--------------------------------------------------|
+| `DOCKER_CONFIG` | The location of your client configuration files. |
+| `DOCKER_CERT_PATH` | The location of your authentication keys. |
+| `DOCKER_DRIVER` | The graph driver to use. |
+| `DOCKER_HOST` | Daemon socket to connect to. |
+| `DOCKER_NOWARN_KERNEL_VERSION` | Prevent warnings that your Linux kernel is unsuitable for Docker. |
+| `DOCKER_RAMDISK` | If set this will disable 'pivot_root'. |
+| `DOCKER_TLS_VERIFY` | When set Docker uses TLS and verifies the remote. |
+| `DOCKER_CONTENT_TRUST` | When set Docker uses notary to sign and verify images. Equates to `--disable-content-trust=false` for build, create, pull, push, run. |
+| `DOCKER_TMPDIR` | Location for temporary Docker files. |
 
-Because Docker is developed using 'Go', you can also use any environment
-variables used by the 'Go' runtime. In particular, you may find these useful:
+### Proxy Configuration
+
+> Example
+
+```
+$ export HTTP_PROXY="http://web-proxy.example.org:8080/"
+$ export HTTPS_PROXY="http://web-proxy.example.org:8080/"
+$ export NO_PROXY="localhost,127.0.0.1,web-proxy.example.org"
+
+$ docker run ubuntu echo Hello World
+```
+
+Proxy configuration can be set using the following environment variables:
 
 * `HTTP_PROXY`
 * `HTTPS_PROXY`
@@ -57,9 +69,10 @@ directory called `.docker` within your `HOME` directory. However, you can
 specify a different location via the `DOCKER_CONFIG` environment variable
 or the `--config` command line option. If both are specified, then the
 `--config` option overrides the `DOCKER_CONFIG` environment variable.
+
 For example:
 
-    docker --config ~/testconfigs/ ps
+`docker --config ~/testconfigs/ ps`
 
 Instructs Docker to use the configuration files in your `~/testconfigs/`
 directory when running the `ps` command.
@@ -68,6 +81,17 @@ Docker manages most of the files in the configuration directory
 and you should not modify them. However, you *can modify* the
 `config.json` file to control certain aspects of how the `docker`
 command behaves.
+
+> Sample `config.json` file:
+
+```json
+{
+  "HttpHeaders": {
+    "MyHeader": "MyValue"
+  },
+  "psFormat": "table {{.ID}}\\t{{.Image}}\\t{{.Command}}\\t{{.Labels}}"
+}
+```    
 
 Currently, you can modify the `docker` command behavior using environment
 variables or command-line options. You can also use options within
@@ -89,29 +113,24 @@ Docker's client uses this property. If this property is not set, the client
 falls back to the default table format. For a list of supported formatting
 directives, see the [**Formatting** section in the `docker ps` documentation](../ps)
 
-Following is a sample `config.json` file:
-
-    {
-      "HttpHeaders": {
-        "MyHeader": "MyValue"
-      },
-      "psFormat": "table {{.ID}}\\t{{.Image}}\\t{{.Command}}\\t{{.Labels}}"
-    }
-
 ## Help
+
+> Example
+
+```cli
+$ docker run --help
+
+Usage: docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+
+Run a command in a new container
+
+  -a, --attach=[]            Attach to STDIN, STDOUT or STDERR
+  -c, --cpu-shares=0         CPU shares (relative weight)
+...
+```
 
 To list the help on any command just execute the command, followed by the
 `--help` option.
-
-    $ docker run --help
-
-    Usage: docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
-
-    Run a command in a new container
-
-      -a, --attach=[]            Attach to STDIN, STDOUT or STDERR
-      -c, --cpu-shares=0         CPU shares (relative weight)
-    ...
 
 ## Option types
 
@@ -132,25 +151,23 @@ container **will** run in "detached" mode, in the background.
 Options which default to `true` (e.g., `docker build --rm=true`) can only be
 set to the non-default value by explicitly setting them to `false`:
 
-    $ docker build --rm=false .
+`$ docker build --rm=false .`
 
 ### Multi
 
 You can specify options like `-a=[]` multiple times in a single command line,
-for example in these commands:
+for example:
 
-    $ docker run -a stdin -a stdout -i -t ubuntu /bin/bash
-    $ docker run -a stdin -a stdout -a stderr ubuntu /bin/ls
+`$ docker run -a stdin -a stdout -a stderr ubuntu /bin/ls`
 
 Sometimes, multiple options can call for a more complex value string as for
 `-v`:
 
-    $ docker run -v /host:/container example/mysql
+`$ docker run -v /host:/container example/mysql`
 
-> **Note:**
-> Do not use the `-t` and `-a stderr` options together due to
-> limitations in the `pty` implementation. All `stderr` in `pty` mode
-> simply goes to `stdout`.
+<aside class="notice">Do not use the `-t` and `-a stderr` options together due to
+limitations in the `pty` implementation. All `stderr` in `pty` mode
+simply goes to `stdout`</aside>
 
 ### Strings and Integers
 

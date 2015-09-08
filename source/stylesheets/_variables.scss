@@ -32,9 +32,9 @@ $code-annotation-bg: $code-bg;
 $nav-subitem-bg: none;
 $nav-active-bg: rgb(34, 184, 235);
 $lang-select-border: #000;
-$lang-select-bg: $code-bg;
-$lang-select-active-bg: $examples-bg; // feel free to change this to blue or something
-$lang-select-pressed-bg: #111; // color of language tab bg when mouse is pressed
+$lang-select-bg: $examples-bg;
+$lang-select-active-bg: $nav-active-bg; // feel free to change this to blue or something
+$lang-select-pressed-bg: $examples-bg; // color of language tab bg when mouse is pressed
 $aside-notice-bg: rgb(143, 188, 212);
 $aside-warning-bg: rgb(201, 122, 126);
 $aside-success-bg: rgb(106, 193, 116);
@@ -44,9 +44,9 @@ $aside-success-bg: rgb(106, 193, 116);
 $main-text: #333; // main content text color
 $nav-text: #216780;
 $nav-active-text: #fff;
-$lang-select-text: rgb(85, 85, 85); // color of unselected language tab text
-$lang-select-active-text: rgb(85, 85, 85); // color of selected language tab text
-$lang-select-pressed-text: rgb(85, 85, 85); // color of language tab text when mouse is pressed
+$lang-select-text: $nav-text; // color of unselected language tab text
+$lang-select-active-text: $nav-active-text; // color of selected language tab text
+$lang-select-pressed-text: $nav-text; // color of language tab text when mouse is pressed
 
 
 // SIZES
