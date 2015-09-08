@@ -13,8 +13,8 @@ $ docker
   A self-sufficient runtime for Linux containers.
   ...
 ```
-To list available commands, either run `docker` with no parameters
-or execute `docker help`
+To list available commands, run `docker` with no parameters
+or execute `docker help`.
 
 Depending on your Docker system configuration, you may be required to preface
 each `docker` command with `sudo`. To avoid having to use `sudo` with the
@@ -24,13 +24,13 @@ each `docker` command with `sudo`. To avoid having to use `sudo` with the
 For more information about installing Docker or `sudo` configuration, refer to
 the [installation](/installation) instructions for your operating system.
 
-## Environment variables
+## Supported environment variables
 
-The following table lists the environment variables that are supported by the Docker Engine.
+The following table lists the environment variables supported by the Docker Engine.
 
-|                 |                                                  |
-|-----------------|--------------------------------------------------|
-| `DOCKER_CONFIG` | The location of your client configuration files. |
+|                  |                                                  |
+|----------------- |--------------------------------------------------|
+| `DOCKER_CONFIG`  | The location of your client configuration files. |
 | `DOCKER_CERT_PATH` | The location of your authentication keys. |
 | `DOCKER_DRIVER` | The graph driver to use. |
 | `DOCKER_HOST` | Daemon socket to connect to. |
@@ -40,7 +40,7 @@ The following table lists the environment variables that are supported by the Do
 | `DOCKER_CONTENT_TRUST` | When set Docker uses notary to sign and verify images. Equates to `--disable-content-trust=false` for build, create, pull, push, run. |
 | `DOCKER_TMPDIR` | Location for temporary Docker files. |
 
-### Proxy Configuration
+### Proxy configuration
 
 > Example
 
@@ -52,29 +52,33 @@ $ export NO_PROXY="localhost,127.0.0.1,web-proxy.example.org"
 $ docker run ubuntu echo Hello World
 ```
 
-Proxy configuration can be set using the following environment variables:
+To set proxy configuration, use:
 
 * `HTTP_PROXY`
 * `HTTPS_PROXY`
 * `NO_PROXY`
 
-These Go environment variables are case-insensitive. See the
-[Go specification](http://golang.org/pkg/net/http/) for details on these
-variables.
+These Go environment variables are case-insensitive. For more information about these variables, see
+[Go specification](http://golang.org/pkg/net/http/).
 
 ## Configuration files
+> Example
+
+```cli
+
+docker --config ~/testconfigs/ ps
+
+```
 
 By default, the Docker command line stores its configuration files in a
 directory called `.docker` within your `HOME` directory. However, you can
 specify a different location via the `DOCKER_CONFIG` environment variable
-or the `--config` command line option. If both are specified, then the
+or the `--config` command line option. 
+If both are specified, then the
 `--config` option overrides the `DOCKER_CONFIG` environment variable.
 
-For example:
 
-`docker --config ~/testconfigs/ ps`
-
-Instructs Docker to use the configuration files in your `~/testconfigs/`
+The example instructs Docker to use the configuration files in your `~/testconfigs/`
 directory when running the `ps` command.
 
 Docker manages most of the files in the configuration directory
@@ -111,9 +115,9 @@ The property `psFormat` specifies the default format for `docker ps` output.
 When the `--format` flag is not provided with the `docker ps` command,
 Docker's client uses this property. If this property is not set, the client
 falls back to the default table format. For a list of supported formatting
-directives, see the [**Formatting** section in the `docker ps` documentation](../ps)
+directives, see the [**Formatting** section in the `docker ps` documentation](../ps).
 
-## Help
+## Help option
 
 > Example
 
@@ -129,12 +133,12 @@ Run a command in a new container
 ...
 ```
 
-To list the help on any command just execute the command, followed by the
+To view help on a command, execute the command followed by the
 `--help` option.
 
 ## Option types
 
-Single character command line options can be combined, so rather than
+Single character command line options can be combined. Rather than
 typing `docker run -i -t --name test busybox sh`,
 you can write `docker run -it --name test busybox sh`.
 
@@ -145,7 +149,8 @@ the default value which is set if you do **not** specify that flag. If you
 specify a Boolean flag without a value, this will set the flag to `true`,
 irrespective of the default value.
 
-For example, running `docker run -d` will set the value to `true`, so your
+For example:
+Running `docker run -d` will set the value to `true`, so your
 container **will** run in "detached" mode, in the background.
 
 Options which default to `true` (e.g., `docker build --rm=true`) can only be
@@ -155,8 +160,9 @@ set to the non-default value by explicitly setting them to `false`:
 
 ### Multi
 
-You can specify options like `-a=[]` multiple times in a single command line,
-for example:
+You can specify options like `-a=[]` multiple times in a single command line.
+
+For example:
 
 `$ docker run -a stdin -a stdout -a stderr ubuntu /bin/ls`
 
