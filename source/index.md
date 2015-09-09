@@ -9,6 +9,7 @@ includes:
   - intro
   - install
   - cli
+  - compose
   - apiv121
   
 
