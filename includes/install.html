@@ -33,15 +33,11 @@
         <div class="page-wrapper">
             <div class="dark-box"></div>
             <div class="content">
-                <h1 id="installation-on-debian">Installation on Debian</h1>
+                <h1 id="installation-guides">Installation Guides</h1>
+
+<h2 id="debian">Debian</h2>
 
 <p>Debian 8 comes with a 3.16.0 Linux kernel, the <code class="prettyprint">docker.io</code> package can be found in the <code class="prettyprint">jessie-backports</code> repository. View reasoning behind this <a href="https://lists.debian.org/debian-release/2015/03/msg00685.html">here</a>. View instructions on how to enable the backports repository <a href="http://backports.debian.org/Instructions/">here</a>.</p>
-
-<aside class="warning">
-Debian contains a much older KDE3/GNOME2 package called &ldquo;docker&rdquo;, so the package and the executable are called &ldquo;docker.io&rdquo;.
-</aside>
-
-<h3 id="installation">Installation</h3>
 
 <ul>
 <li><p>Make sure you enabled the <code class="prettyprint">jessie-backports</code> repository, as stated above.</p></li>
@@ -56,6 +52,10 @@ container runs, it prints an informational message. Then, it exits.</p>
 <p>If you need to add an HTTP Proxy, set a different directory or partition for the
 Docker runtime files, or make other customizations, read our Systemd article to
 learn how to <a href="/articles/systemd/">customize your Systemd Docker daemon options</a>.</p>
+
+<aside class="warning">
+Debian contains a much older KDE3/GNOME2 package called &ldquo;docker&rdquo;, so the package and the executable are called &ldquo;docker.io&rdquo;.
+</aside>
 
 <aside class="notice">
 If you want to enable memory and swap accounting see <a href="/installation/ubuntulinux/#adjust-memory-and-swap-accounting">this</a>.

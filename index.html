@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <title>Remote API Documentation</title>
+        <title>Docker Documentation</title>
 
         <link href="stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
         <link href="stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
@@ -47,15 +47,26 @@ $(function() {
             <div class="dark-box"></div>
             <div class="content">
                 
-                    <h1 id="installation-on-debian">Installation on Debian</h1>
+                    <h1 id="introduction">Introduction</h1>
+
+<h2 id="engine">Engine</h2>
+
+<p><strong>Docker Engine</strong> or &ldquo;Docker&rdquo; is the core component that is responsible for:
+ - Building Images
+ - Creating &amp; running containers
+ - Managing containers. </p>
+
+<p>The <code class="prettyprint">docker</code> binary can run as both a daemon and a client.  In daemon mode, it is responsible for managing containers and image builds.  As a client it is responsible for controlling a Docker daemon using the REST API that it exposes. </p>
+
+<h2 id="docker-hub">Docker Hub</h2>
+
+<p>Docker Hub is our hosted registry service for managing your images. There is nothing to install. This is used as the default registry by the Docker Engine. Users can create their own public and private image repositories by <a href="https://hub.docker.com/">creating a Hub account</a>.</p>
+
+                    <h1 id="installation-guides">Installation Guides</h1>
+
+<h2 id="debian">Debian</h2>
 
 <p>Debian 8 comes with a 3.16.0 Linux kernel, the <code class="prettyprint">docker.io</code> package can be found in the <code class="prettyprint">jessie-backports</code> repository. View reasoning behind this <a href="https://lists.debian.org/debian-release/2015/03/msg00685.html">here</a>. View instructions on how to enable the backports repository <a href="http://backports.debian.org/Instructions/">here</a>.</p>
-
-<aside class="warning">
-Debian contains a much older KDE3/GNOME2 package called &ldquo;docker&rdquo;, so the package and the executable are called &ldquo;docker.io&rdquo;.
-</aside>
-
-<h3 id="installation">Installation</h3>
 
 <ul>
 <li><p>Make sure you enabled the <code class="prettyprint">jessie-backports</code> repository, as stated above.</p></li>
@@ -71,11 +82,18 @@ container runs, it prints an informational message. Then, it exits.</p>
 Docker runtime files, or make other customizations, read our Systemd article to
 learn how to <a href="/articles/systemd/">customize your Systemd Docker daemon options</a>.</p>
 
+<aside class="warning">
+Debian contains a much older KDE3/GNOME2 package called &ldquo;docker&rdquo;, so the package and the executable are called &ldquo;docker.io&rdquo;.
+</aside>
+
 <aside class="notice">
 If you want to enable memory and swap accounting see <a href="/installation/ubuntulinux/#adjust-memory-and-swap-accounting">this</a>.
 </aside>
 
                     <h1 id="command-line-reference">Command Line Reference</h1>
+
+<p>To list available commands, run <code class="prettyprint">docker</code> with no parameters
+or execute <code class="prettyprint">docker help</code>.</p>
 
 <blockquote>
 <p>Example</p>
@@ -90,9 +108,6 @@ If you want to enable memory and swap accounting see <a href="/installation/ubun
   A self-sufficient runtime for Linux containers.
   ...
 </code></pre>
-
-<p>To list available commands, run <code class="prettyprint">docker</code> with no parameters
-or execute <code class="prettyprint">docker help</code>.</p>
 
 <p>Depending on your Docker system configuration, you may be required to preface
 each <code class="prettyprint">docker</code> command with <code class="prettyprint">sudo</code>. To avoid having to use <code class="prettyprint">sudo</code> with the
@@ -292,6 +307,285 @@ simply goes to `stdout`</aside>
 <p>Options like <code class="prettyprint">--name=&quot;&quot;</code> expect a string, and they
 can only be specified once. Options like <code class="prettyprint">-c=0</code>
 expect an integer, and they can only be specified once.</p>
+
+                    <h1 id="docker-machine">Docker Machine</h1>
+
+<aside class="notice">Machine is currently in beta, so things are likely to change. We don&rsquo;t recommend you use it in production yet.</aside>
+
+<p>Machine lets you create Docker hosts on your computer, on cloud providers, and
+inside your own data center. It automatically creates hosts, installs Docker on
+them, then configures the <code class="prettyprint">docker</code> client to talk to them. A &ldquo;machine&rdquo; is the
+combination of a Docker host and a configured client.</p>
+
+<p>Once you create one or more Docker hosts, Docker Machine supplies a number of commands for
+managing them. Using these commands you can</p>
+
+<ul>
+<li>start, inspect, stop, and restart a host</li>
+<li>upgrade the Docker client and daemon</li>
+<li>configure a Docker client to talk to your host</li>
+</ul>
+
+<h2 id="understand-docker-machine-basic-concepts">Understand Docker Machine basic concepts</h2>
+
+<p>Docker Machine allows you to provision Docker on virtual machines that reside either on your local system or on a cloud provider. Docker Machine creates a host on a VM and you use the Docker Engine client as needed to build images and create containers on the host.</p>
+
+<p>To create a virtual machine, you supply Docker Machine with the name of the driver you want use. The driver represents the virtual environment. For example, on a local Linux, Mac, or Windows system the driver is typically Oracle Virtual Box. For cloud providers, Docker Machine supports drivers such as AWS, Microsoft Azure, Digital Ocean and many more. The Docker Machine reference includes a complete <a href="/drivers">list of the supported drivers</a>.</p>
+
+<p>Since Docker runs on Linux, each VM that Docker Machine provisions relies on a base operating system. For convenience, there are default base operating systems. For the Oracle Virtual Box driver, this base operating system is the <code class="prettyprint">boot2docker.iso</code>. For drivers used to connect to cloud providers, the base operating system is Ubuntu 12.04+. You can change this default when you create a machine. The Docker Machine reference includes a complete <a href="/drivers/os-base">list of the supported operating systems</a>.</p>
+
+<p>For each machine you create, the Docker host address is the IP address of the
+Linux VM. This address is assigned by the <code class="prettyprint">docker-machine create</code> subcommand.
+You use the <code class="prettyprint">docker-machine ls</code> command to list the machines you have created.
+The <code class="prettyprint">docker-machine ip &lt;machine-name&gt;</code> command returns a specific host&rsquo;s IP address.</p>
+
+<p>Before you can run a <code class="prettyprint">docker</code> command on a machine, you configure your
+command-line to point to that machine. The <code class="prettyprint">docker-machine env &lt;machine-name&gt;</code>
+subcommand outputs the configuration command you should use. When you run a
+container on the Docker host, the container&rsquo;s ports map to ports on the VM.</p>
+
+<p>For a complete list of the <code class="prettyprint">docker-machine</code> subcommands, see the <a href="/reference">Docker Machine subcommand reference</a>.</p>
+
+<h2 id="getting-help">Getting help</h2>
+
+<p>Docker Machine is still in its infancy and under active development. If you need
+help, would like to contribute, or simply want to talk about to the project with
+like-minded individuals, we have a number of open channels for communication.</p>
+
+<ul>
+<li>To report bugs or file feature requests: please use the <a href="https://github.com/docker/machine/issues">issue tracker on
+Github</a>.</li>
+<li>To talk about the project with people in real time: please join the
+<code class="prettyprint">#docker-machine</code> channel on IRC.</li>
+<li>To contribute code or documentation changes: please <a href="https://github.com/docker/machine/pulls">submit a pull request on
+Github</a>.</li>
+</ul>
+
+<p>For more information and resources, please visit
+<a href="https://docs.docker.com/project/get-help/">our help page</a>.</p>
+
+<h2 id="where-to-go-next">Where to go next</h2>
+
+<ul>
+<li>Install a machine on your <a href="get-started.md">local system using VirtualBox</a>.</li>
+<li>Install multiple machines <a href="get-started-cloud.md">on your cloud provider</a>.</li>
+<li><a href="/drivers">Docker Machine driver reference</a></li>
+<li><a href="/reference">Docker Machine subcommand reference</a></li>
+</ul>
+
+                    <h1 id="docker-compose">Docker Compose</h1>
+
+<p>Compose is a tool for defining and running multi-container applications with
+Docker. With Compose, you define a multi-container application in a single
+file, then spin your application up in a single command which does everything
+that needs to be done to get it running.</p>
+
+<p>Compose is great for development environments, staging servers, and CI. We don&rsquo;t
+recommend that you use it in production yet.</p>
+
+<p>Using Compose is basically a three-step process.</p>
+
+<ol>
+<li>Define your app&rsquo;s environment with a <code class="prettyprint">Dockerfile</code> so it can be
+reproduced anywhere.</li>
+<li>Define the services that make up your app in <code class="prettyprint">docker-compose.yml</code> so
+they can be run together in an isolated environment:</li>
+<li>Lastly, run <code class="prettyprint">docker-compose up</code> and Compose will start and run your entire app.</li>
+</ol>
+
+<blockquote>
+<p>Example docker-compose.yml</p>
+</blockquote>
+<pre class="highlight plaintext"><code>web:
+  build: .
+  ports:
+   - "5000:5000"
+  volumes:
+   - .:/code
+  links:
+   - redis
+redis:
+  image: redis
+</code></pre>
+
+<p>Compose has commands for managing the whole lifecycle of your application:</p>
+
+<ul>
+<li>Start, stop and rebuild services</li>
+<li>View the status of running services</li>
+<li>Stream the log output of running services</li>
+<li>Run a one-off command on a service</li>
+</ul>
+
+<h2 id="quick-start">Quick start</h2>
+
+<p>Let&rsquo;s get started with a walkthrough of getting a simple Python web app running
+on Compose. It assumes a little knowledge of Python, but the concepts
+demonstrated here should be understandable even if you&rsquo;re not familiar with
+Python.</p>
+
+<h3 id="installation-and-set-up">Installation and set-up</h3>
+
+<p>First, <a href="install.md">install Docker and Compose</a>.</p>
+
+<p>Next, you&rsquo;ll want to make a directory for the project:</p>
+
+<p><code class="prettyprint">$ mkdir composetest</code>
+<code class="prettyprint">$ cd composetest</code></p>
+
+<p>Inside this directory, create <code class="prettyprint">app.py</code>, a simple web app that uses the Flask framework and increments a value in Redis. Don&rsquo;t worry if you don&rsquo;t have Redis installed, docker is going to take care of that for you when we <a href="#define-services">define services</a></p>
+
+<blockquote>
+<p>app.py</p>
+</blockquote>
+<pre class="highlight plaintext"><code>from flask import Flask
+from redis import Redis
+
+app = Flask(__name__)
+redis = Redis(host='redis', port=6379)
+
+@app.route('/')
+def hello():
+    redis.incr('hits')
+    return 'Hello World! I have been seen %s times.' % redis.get('hits')
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", debug=True)
+</code></pre>
+
+<p>Next, define the Python dependencies in a file called <code class="prettyprint">requirements.txt</code>:</p>
+
+<blockquote>
+<p>requirements.txt</p>
+</blockquote>
+<pre class="highlight plaintext"><code>flask
+redis
+</code></pre>
+
+<h3 id="create-a-docker-image">Create a Docker image</h3>
+
+<p>Now, create a Docker image containing all of your app&rsquo;s dependencies. You
+specify how to build the image using a file called
+<a href="http://docs.docker.com/reference/builder/"><code class="prettyprint">Dockerfile</code></a>:</p>
+
+<blockquote>
+<p>Dockerfile</p>
+</blockquote>
+<pre class="highlight plaintext"><code>FROM python:2.7
+ADD . /code
+WORKDIR /code
+RUN pip install -r requirements.txt
+CMD python app.py
+</code></pre>
+
+<p>This tells Docker to:</p>
+
+<ul>
+<li>Build an image starting with the Python 2.7 image.</li>
+<li>Add the current directory <code class="prettyprint">.</code> into the path <code class="prettyprint">/code</code> in the image.</li>
+<li>Set the working directory to <code class="prettyprint">/code</code>.</li>
+<li>Install your Python dependencies.</li>
+<li>Set the default command for the container to <code class="prettyprint">python app.py</code></li>
+</ul>
+
+<p>For more information on how to write Dockerfiles, see the <a href="https://docs.docker.com/userguide/dockerimages/#building-an-image-from-a-dockerfile">Docker user guide</a> and the <a href="http://docs.docker.com/reference/builder/">Dockerfile reference</a>.</p>
+
+<p>You can test that this builds by running <code class="prettyprint">docker build -t web .</code>.</p>
+
+<h3 id="define-services">Define services</h3>
+
+<p>Next, define a set of services using <code class="prettyprint">docker-compose.yml</code>.</p>
+
+<blockquote>
+<p>docker-compose.yml</p>
+</blockquote>
+<pre class="highlight plaintext"><code>web:
+  build: .
+  ports:
+   - "5000:5000"
+  volumes:
+   - .:/code
+  links:
+   - redis
+redis:
+  image: redis
+</code></pre>
+
+<p>This defines two services:</p>
+
+<h4 id="web">web</h4>
+
+<ul>
+<li>Builds from the <code class="prettyprint">Dockerfile</code> in the current directory.</li>
+<li>Forwards the exposed port 5000 on the container to port 5000 on the host machine.</li>
+<li>Connects the web container to the Redis service via a link.</li>
+<li>Mounts the current directory on the host to <code class="prettyprint">/code</code> inside the container allowing you to modify the code without having to rebuild the image.</li>
+</ul>
+
+<h4 id="redis">redis</h4>
+
+<ul>
+<li>Uses the public <a href="https://registry.hub.docker.com/_/redis/">Redis</a> image which gets pulled from the Docker Hub registry.</li>
+</ul>
+
+<h3 id="build-and-run-your-app-with-compose">Build and run your app with Compose</h3>
+
+<p>Now, when you run <code class="prettyprint">docker-compose up</code>, Compose will pull a Redis image, build an image for your code, and start everything up:</p>
+
+<blockquote>
+<p>Example Output</p>
+</blockquote>
+<pre class="highlight plaintext"><code>$ docker-compose up
+Pulling image redis...
+Building web...
+Starting composetest_redis_1...
+Starting composetest_web_1...
+redis_1 | [8] 02 Jan 18:43:35.576 # Server started, Redis version 2.8.3
+web_1   |  * Running on http://0.0.0.0:5000/
+web_1   |  * Restarting with stat
+</code></pre>
+
+<p>If you&rsquo;re using <a href="https://docs.docker.com/machine">Docker Machine</a>, then <code class="prettyprint">docker-machine ip MACHINE_VM</code> will tell you its address and you can open <code class="prettyprint">http://MACHINE_VM_IP:5000</code> in a browser.</p>
+
+<p>If you&rsquo;re not using Boot2docker and are on linux, then the web app should now be listening on port 5000 on your Docker daemon host. If http://0.0.0.0:5000 doesn&rsquo;t resolve, you can also try localhost:5000.</p>
+
+<p>You should get a message in your browser saying:</p>
+
+<p><code class="prettyprint">Hello World! I have been seen 1 times.</code></p>
+
+<p>Refreshing the page will increment the number.</p>
+
+<p>If you want to run your services in the background, you can pass the <code class="prettyprint">-d</code> flag
+(for &ldquo;detached&rdquo; mode) to <code class="prettyprint">docker-compose up</code> and use <code class="prettyprint">docker-compose ps</code> to
+see what is currently running</p>
+
+<blockquote>
+<p>Example Output</p>
+</blockquote>
+<pre class="highlight plaintext"><code>$ docker-compose up -d
+Starting composetest_redis_1...
+Starting composetest_web_1...
+$ docker-compose ps
+    Name                 Command            State       Ports
+-------------------------------------------------------------------
+composetest_redis_1   /usr/local/bin/run         Up
+composetest_web_1     /bin/sh -c python app.py   Up      5000-&gt;5000/tcp
+</code></pre>
+
+<p>The <code class="prettyprint">docker-compose run</code> command allows you to run one-off commands for your
+services. For example, to see what environment variables are available to the
+<code class="prettyprint">web</code> service:</p>
+
+<p><code class="prettyprint">$ docker-compose run web env</code></p>
+
+<p>See <code class="prettyprint">docker-compose --help</code> to see other available commands. You can also install <a href="completion.md">command completion</a> for the bash and zsh shell, which will also show you available commands.</p>
+
+<p>If you started Compose with <code class="prettyprint">docker-compose up -d</code>, you&rsquo;ll probably want to stop
+your services once you&rsquo;ve finished with them:</p>
+
+<p><code class="prettyprint">$ docker-compose stop</code></p>
+
+<p>At this point, you have seen the basics of how Compose works.</p>
 
                     <h1 id="api-reference">API Reference</h1>
 
