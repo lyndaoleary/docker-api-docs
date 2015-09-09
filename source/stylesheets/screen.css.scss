@@ -87,7 +87,7 @@ html, body {
     bottom: 0;
     width: $nav-width;
     background-color: $nav-bg;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
 
     // language selector for mobile devices
@@ -204,7 +204,7 @@ html, body {
         font-weight: 500;
         .tocify-item>a {
             padding-left: $nav-padding + $nav-indent;
-            font-size: 16px;
+            font-size: $font-size;
         }
 
         &>li:last-child {
@@ -545,17 +545,23 @@ html, body {
 
 .content {
     pre, blockquote {
-        position:relative;
-        top: 0;
         background-color: $code-annotation-bg;
         color: #fff;
+
         padding: 0.5em $main-padding;
         margin: 0;
         width: $examples-width;
+
         float:right;
         clear:right;
-        @include box-sizing(border-box);
+
+        position:relative;
+        top: 0;
+
+        box-sizing: border-box;
         @include text-shadow(none);
+
+        @extend %right-col;
 
         &>p { margin: 0; }
 
@@ -578,7 +584,7 @@ html, body {
 
     blockquote:before {
         content: "";
-        display: inline-block;
+        display: block;
         width: 12px;
         height: 12px;
         background-image: url("../images/triangle.gif");

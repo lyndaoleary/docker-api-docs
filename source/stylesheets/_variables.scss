@@ -67,9 +67,10 @@ $phone-width: $tablet-width - $nav-width; // min width before reverting to mobil
 
 // FONTS
 ////////////////////
+$font-size: 14px;
 %default-font {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 16px;
+    font-size: $font-size;
 }
 
 %header-font {

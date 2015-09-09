@@ -1,5 +1,9 @@
 # Command Line Reference
 
+
+To list available commands, run `docker` with no parameters
+or execute `docker help`.
+
 > Example
 
 ```cli
@@ -13,8 +17,6 @@ $ docker
   A self-sufficient runtime for Linux containers.
   ...
 ```
-To list available commands, run `docker` with no parameters
-or execute `docker help`.
 
 Depending on your Docker system configuration, you may be required to preface
 each `docker` command with `sudo`. To avoid having to use `sudo` with the
